@@ -1011,13 +1011,6 @@ UTIL=" $UTIL1 $UTIL2 $UTIL3 $UTIL4 $UTIL5 $UTIL6 $UTIL7 "
 
 
 
-#TIPOGRAFIAS
-FONT=" gnu-free-fonts ttf-opensans ttf-hack ttf-font-awesome awesome-terminal-fonts noto-fonts-emoji adobe-source-han-sans-jp-fonts adobe-source-han-sans-cn-fonts gnome-font-viewer "
-# FIN TIPOGRAFIAS
-
-
-
-
 #REPRODUCTOR
 sporitykey=false
 
@@ -1503,7 +1496,7 @@ sudo -u $nombre_usuario yay -S $SH --noeditmenu --noconfirm --needed && mensaje_
 
 titulo_progreso="Instalando Tipografias"
 barra_progreso
-sudo -u $nombre_usuario yay -S $FONT --noeditmenu --noconfirm --needed && mensaje_install
+sudo -u $nombre_usuario yay -S gnu-free-fonts ttf-opensans ttf-hack ttf-font-awesome awesome-terminal-fonts noto-fonts-emoji adobe-source-han-sans-jp-fonts adobe-source-han-sans-cn-fonts gnome-font-viewer --noeditmenu --noconfirm --needed && mensaje_install
 
 
 
