@@ -1,0 +1,2 @@
+#!/bin/bash
+yay -S pantheon-session-git cerbere-git gala-git wingpanel-git pantheon-applications-menu-git plank pantheon-default-settings-git elementary-icon-theme gtk-theme-elementary-git elementary-wallpapers-git gnome-settings-daemon-elementary gnome-settings-daemon-ubuntu pantheon-dpms-helper-git wingpanel-indicator-power-git pantheon-print-git pantheon-polkit-agent-git pantheon-files-git pantheon-terminal-git
