@@ -909,7 +909,7 @@ do
             qtile_config=true
             ;;
         3)
-            WM="dwm-git thunar alacritty network-manager-applet polkit-gnome gnome-keyring lxappearance ly-git rxvt-unicode gnome-themes-extra"
+            WM="dwm-git dmenu st thunar network-manager-applet polkit-gnome gnome-keyring lxappearance ly-git rxvt-unicode gnome-themes-extra"
             DM="ly-git"
             echo ly > DMservice
             qtile_config=true
