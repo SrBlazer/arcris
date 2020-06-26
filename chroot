@@ -152,8 +152,9 @@ titulo="| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |
 
 if ping -c 3 www.google.com &> /dev/null; then  
 
-   dialog --title "|  Conexión a RED  |" --backtitle "$titulo" \
-   --prgbox "ping -c 3 archlinux.org && echo && echo Si Hay Internet!" 17 100   
+   #dialog --title "|  Conexión a RED  |" --backtitle "$titulo" \
+   #--prgbox "ping -c 3 archlinux.org && echo && echo Si Hay Internet!" 17 100   
+   echo ""
 
 else
 
@@ -296,7 +297,7 @@ kernel=$(uname -a | tail -c -6)
 
 if [ "$VM" == "true" ]; then
     
-            inxi -Gx | dialog --no-collapse --cr-wrap --backtitle "Instalación de ArchLinux - https://t.me/ArchLinuxCristo" --progressbox "-| Driver de Vídeo |-" 15 100; sleep 5
+            inxi -Gx | dialog --no-collapse --cr-wrap --backtitle "Instalación de ArchLinux - https://t.me/ArchLinuxCristo" --progressbox "-| Driver de Vídeo, Espere... |-" 15 100; sleep 5
             case "$virt" in
                 
                 vbox)   if [ "$kernel" == "Linux" ]; then
@@ -535,7 +536,7 @@ for choice in $choices
 do
     case $choice in
         1) #INICIO (DE)           
-cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "$titulo" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Selecciona tu escritorio a instalar - (DE)" 19 60 19)
+cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "$titulo" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Selecciona tu escritorio a instalar - (DE)" 22 60 19)
 
 options=(1 " > | xfce4 | Xfce desktop| <"
          2 " > | plasma | KDE Plasma desktop| <"
@@ -740,7 +741,7 @@ done
             echo lightdm > DMservice
             
             ;;
-######FINAL DEEPIN
+			######FINAL DEEPIN
 
         4)  #INICIO GNOME
             DE="gnome gnome-shell gnome-tweaks tumbler ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer"
@@ -755,10 +756,10 @@ done
             ;;
             
         6) #INICIO cinnamon
-            DE="cinnamon cinnamon-translations xed xviewer xreader xplayer pix"
-            DM="gdm"
+            DE="cinnamon cinnamon-translations"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo -e "exec cinnamon-session" > /home/$nombre_usuario/.xinitrc
-            echo gdm > DMservice
+            echo lightdm > DMservice
             ;;
 
         7) #INICIO budgie-desktop
@@ -768,7 +769,7 @@ done
             echo gdm > DMservice
             ;;
 
-        8)  DE="enlightenment entrance-git terminology network-manager-applet eluminance-git ephoto stalonetray"
+        8)  DE="enlightenment entrance-git terminology network-manager-applet eluminance-git stalonetray"
             echo -e "exec enlightenment_start" > /home/$nombre_usuario/.xinitrc
             echo entrance > DMservice
             ;;
@@ -814,8 +815,8 @@ done
             echo lightdm > DMservice
             ;;
         15) #INICIO Pantheon
-            DE="pantheon pantheon-files pantheon-session-git cerbere-git gala-git gnome-settings-daemon-elementary wingpanel-indicator-power-git pantheon-applications-menu-git pantheon-default-settings-git pantheon-print-git pantheon-polkit-agent-git elementary-icon-theme wingpanel-git pantheon-terminal network-manager-applet wingpanel-git plank pantheon-default-settings-git pantheon-polkit-agent-git pantheon-files"
-            DM="lightdm lightdm-pantheon-greeter light-locker accountsservice"
+            DE="pantheon pantheon-files pantheon-session-git onboard orca cerbere-git gala-git gnome-settings-daemon-elementary wingpanel-indicator-power-git pantheon-applications-menu-git pantheon-default-settings-git pantheon-print-git pantheon-polkit-agent-git elementary-icon-theme wingpanel-git pantheon-terminal network-manager-applet wingpanel-git plank pantheon-default-settings-git pantheon-polkit-agent-git pantheon-files"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo -e "exec cerbere" > /home/$nombre_usuario/.xinitrc
             echo lightdm > DMservice
             ;;
@@ -923,14 +924,76 @@ done
     esac
 done
 
+
+
+
+#TERMINALES
+cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo"  \
+--no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Terminal para tu sistema\n[ ESPACIO ] - Para marcar o desmarcar *" 17 70 20)
+options=(1 "lxterminal" on    # any option can be set to default to "on"
+         2 "tilix" off
+         3 "xfce4-terminal" off
+         4 "deepin-terminal" off
+         5 "mate-terminal" off
+         6 "terminator" off
+         7 "sakura" off
+         8 "alacritty" off
+         9 "kitty" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            TERMI1="lxterminal"
+            ;;
+        2)
+            TERMI2="tilix"
+            ;;
+        3)
+            TERMI3="xfce4-terminal"
+            ;;
+        4)
+            TERMI4="deepin-terminal"
+            ;;
+        
+        5)
+            TERMI5="mate-terminal"
+            ;;
+
+        6)
+            TERMI6="terminator"
+            ;;
+               
+        7)
+            TERMI7="sakura"
+            ;;   
+        7)
+            TERMI8="alacritty"
+            ;;   
+        7)
+            TERMI9="kitty"
+            ;;   
+    esac
+done
+TERMI=" $TERMI1 $TERMI2 $TERMI3 $TERMI4 $TERMI5 $TERMI6 $TERMI7 $TERMI8 $TERMI9 "
+#FINAL DE TERMINALES
+
+
+
+
+
 #AUDIO
-cmd=(dialog --no-collapse --cr-wrap --title "-| Audio del Sistema |-" --backtitle "$titulo" \
---no-tags --ok-label '< Siguiente >' --nocancel --menu "\nPulseAudio es para el usuario tradicional \
+cmd=(dialog --no-collapse --cr-wrap --title "-| Audio del Sistema |-" --backtitle "$titulo"  \
+--no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "\nPulseAudio es para el usuario tradicional \
 \nJack Audio es para Profesionales sin latencia \
-\nAlsa Audio es para terminal sin Interfaz Gráfica\n " 14 70 20)
-options=(1 "Pulseaudio + Códecs de audio"   
-         2 "Jack2      + Códecs de audio"
-         3 "ALSA       + Códecs de audio")
+\nAlsa Audio es para terminal sin Interfaz Gráfica\n \
+\n[ ESPACIO ] - Para marcar o desmarcar *" 15 70 20)
+options=(1 "Pulseaudio + Códecs de audio" on    # any option can be set to default to "on"
+         2 "Jack2      + Códecs de audio" off
+         3 "ALSA       + Códecs de audio" off)
+
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -950,7 +1013,6 @@ do
             AUDIO3="alsa-utils alsa-plugins alsa-oss alsa-firmware pamixer"
             #https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture
             ;;
-                   
     esac
 done
 AUDIO=" $AUDIO1 $AUDIO2 $AUDIO3 "
@@ -1059,14 +1121,8 @@ do
             ;;
         6)
             REPRO6="spotify"
-            printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "_"
-            echo -e ""
-            echo -e "\t\t\t         Actualizando          "
-            printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
-            echo -e ""
-            gpg --recv-keys 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
-            gpg --recv-keys 2EBF997C15BDA244B6EBF5D84773BD5E130D1D45
             REPRO_condicion=true
+            spotify_condicion=true
             ;;
         7)
             REPRO7="clementine"
@@ -1106,7 +1162,8 @@ options=(1 "Firefox | Open source" on    # any option can be set to default to "
          3 "Brave | AUR - Open source" off
          4 "Google Chrome | AUR - Proprietary browser" off         
          5 "Opera | Proprietary browser" off
-         6 "Vivaldi | AUR - Proprietary browser" off)
+         6 "Vivaldi | AUR - Proprietary browser" off
+         7 "tor-browser | AUR - Open source" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -1136,9 +1193,14 @@ do
             WEB6="vivaldi"
             WEB_condicion=true
             ;;
+        7)
+            WEB7="tor-browser"
+            WEB_condicion=true
+            tor_condicion=true
+            ;; 
     esac
 done
-WEB=" $WEB1 $WEB2 $WEB3 $WEB4 $WEB5 $WEB6 "
+WEB=" $WEB1 $WEB2 $WEB3 $WEB4 $WEB5 $WEB6 $WEB7 "
 # FIN NAVEGADORES
 
 
@@ -1284,7 +1346,7 @@ for choice in $choices
 do
     case $choice in
         1)
-            SH="zsh zsh-completions zsh-syntax-highlighting"
+            SH="zsh zsh-completions zsh-syntax-highlighting zsh-autosuggestions"
             cp /root/zshrc /home/$nombre_usuario/.zshrc
             cp /root/zshrc /root/.zshrc
             ;;
@@ -1476,6 +1538,11 @@ echo -e ""
 systemctl enable $(cat DMservice) && mensaje_install
 
 
+titulo_progreso="Instalando Terminal del Sistema"
+barra_progreso
+sudo -u $nombre_usuario yay -S $TERMI --noeditmenu --noconfirm --needed && mensaje_install
+
+
 titulo_progreso="Instalando Utilidades del Sistema"
 barra_progreso
 sudo -u $nombre_usuario yay -S $UTIL --noeditmenu --noconfirm --needed && mensaje_install
@@ -1501,6 +1568,16 @@ barra_progreso
 sudo -u $nombre_usuario yay -S gnu-free-fonts ttf-opensans ttf-hack ttf-font-awesome awesome-terminal-fonts noto-fonts-emoji adobe-source-han-sans-jp-fonts adobe-source-han-sans-cn-fonts gnome-font-viewer --noeditmenu --noconfirm --needed && mensaje_install
 
 
+if [ "$tor_condicion" == "true" ]; then
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "_"
+echo -e ""
+echo -e "\t\t\t         Actualizando Keys para Tor browser          "
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
+echo -e ""
+gpg --recv-keys EF6E286DDA85EA2A4BA7DE684E2C6E8793298290
+clear
+    fi
+
 
 if [ "$WEB_condicion" == "true" ]; then
 titulo_progreso="Instalando navegador Web"
@@ -1509,11 +1586,24 @@ sudo -u $nombre_usuario yay -S $WEB --noeditmenu --noconfirm --needed && mensaje
     fi
 
 
+if [ "$spotify_condicion" == "true" ]; then
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "_"
+echo -e ""
+echo -e "\t\t\t         Actualizando Keys de Spotify          "
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
+echo -e ""
+gpg --recv-keys 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+gpg --recv-keys 2EBF997C15BDA244B6EBF5D84773BD5E130D1D45
+clear
+    fi
+
+
 if [ "$REPRO_condicion" == "true" ]; then
 titulo_progreso="Instalando Reproductor de Música/Vídeo"
 barra_progreso
 sudo -u $nombre_usuario yay -S $REPRO --noeditmenu --noconfirm --needed && mensaje_install
     fi
+
 
 
 if [ "$OFFICE_condicion" == "true" ]; then

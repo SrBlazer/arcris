@@ -83,8 +83,7 @@ do
 done
 
 
-dialog --backtitle "$titulo" --title "-| Mensaje |-" --infobox "\n> UEFI trabaja con discos en GPT \n\n> UEFI su partición boot es formateada en FAT32 \n\n> BIOS LEGACY trabaja con discos en DOS/MBR\n\n> BIOS LEGACY su partición boot es formateada en EXT4\n( La partición boot en linux es opcional )" 12 60; sleep 4
-
+dialog --backtitle "$titulo" --title "-| Mensaje |-" --msgbox "\n> UEFI trabaja con discos en GPT \n\n> UEFI su partición boot es formateada en FAT32 \n\n> BIOS LEGACY trabaja con discos en DOS/MBR\n\n> BIOS LEGACY su partición boot es formateada en EXT4\n( La partición boot en linux es opcional )" 13 60
 
 
 
@@ -591,7 +590,7 @@ r8168=$(arch-chroot /mnt /bin/bash -c "lspci -k | grep 'RTL8111/8168/8411' ")
 		
 
 cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" \
---no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 14 100 19)
+--no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 12 70 10)
 options=(1 "Microcode del Procesador" on    # any option can be set to default to "on"
          2 "Driver para WiFi" off
          3 "Driver para Touchpad" off
@@ -632,7 +631,7 @@ hddtemp alsi inxi-git unzip zip yay-bin --noconfirm' 25 80
 
 
 cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" \
---no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 14 100 19)
+--no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 12 70 10)
 options=(1 "Microcode del Procesador" on    # any option can be set to default to "on"
          2 "Driver para WiFi" off
          3 "Driver para Touchpad" off
@@ -687,7 +686,7 @@ r8168=$(arch-chroot /mnt /bin/bash -c "lspci -k | grep 'RTL8111/8168/8411' ")
 		fi
 
 cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" \
---no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 14 100 19)
+--no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 12 70 10)
 options=(1 "Microcode del Procesador" on    # any option can be set to default to "on"
          2 "Driver para WiFi" off
          3 "Driver para Touchpad" off
@@ -727,7 +726,7 @@ hddtemp alsi inxi-git unzip zip yay-bin --noconfirm' 25 80
 
 
 cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" \
---no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 14 100 19)
+--no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 12 70 10)
 options=(1 "Microcode del Procesador" on    # any option can be set to default to "on"
          2 "Driver para WiFi" off
          3 "Driver para Touchpad" off
@@ -857,7 +856,7 @@ do
   fi
 done
 
-dialog --backtitle "$titulo" --title "| Clave Correcta |" --msgbox '\nContraseña Conrrecta!' 8 40
+dialog --backtitle "$titulo" --title "| Clave Correcta |" --msgbox '\n\nContraseña Conrrecta!' 8 40
 arch-chroot /mnt /bin/sh -c "echo root:$rootpasswd | chpasswd"
 
 
@@ -879,7 +878,7 @@ do
     clear
   fi
 done
-dialog --backtitle "$titulo" --title "| Clave Correcta |" --msgbox '\nContraseña Conrrecta!' 8 40
+dialog --backtitle "$titulo" --title "| Clave Correcta |" --msgbox '\n\nContraseña Conrrecta!' 8 40
 arch-chroot /mnt /bin/bash -c "echo $user:$userpasswd | chpasswd"
 #sed -i '/%wheel ALL=(ALL) ALL/s/^#//g' /mnt/etc/sudoers
 arch-chroot /mnt /bin/bash -c "hwclock -w"
