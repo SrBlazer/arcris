@@ -814,8 +814,8 @@ done
             echo lightdm > DMservice
             ;;
         15) #INICIO Pantheon
-            DE="pantheon-session-git pantheon-terminal network-manager-applet wingpanel-git plank pantheon-default-settings-git pantheon-polkit-agent-git pantheon-files"
-            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            DE="pantheon pantheon-files pantheon-session-git cerbere-git gala-git gnome-settings-daemon-elementary wingpanel-indicator-power-git pantheon-applications-menu-git pantheon-default-settings-git pantheon-print-git pantheon-polkit-agent-git elementary-icon-theme wingpanel-git pantheon-terminal network-manager-applet wingpanel-git plank pantheon-default-settings-git pantheon-polkit-agent-git pantheon-files"
+            DM="lightdm lightdm-pantheon-greeter light-locker accountsservice"
             echo -e "exec cerbere" > /home/$nombre_usuario/.xinitrc
             echo lightdm > DMservice
             ;;
