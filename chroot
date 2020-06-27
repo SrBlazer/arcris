@@ -556,8 +556,8 @@ options=(1 " > | xfce4 | Xfce desktop| <"
          11 " > | lxqt | LXDE-Qt y Razor-qt projects| <"
          12 " > | mate | Mate GTK3 desktop| <"
          13 " > | ukui | GTK and Qt| <"
-         14 " > | liri | Desktop| <"
-         15 " > | lumina | AUR - Compilar| <")
+         14 " > | liri | AUR - Compilación| <"
+         15 " > | lumina | AUR - Compilación| <")
          #15 " > | Pantheon | Desktop| <")
 
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
@@ -814,14 +814,14 @@ done
             echo lightdm > DMservice
             ;;
         14) #INICIO Liri
-            DE="liri-git-meta network-manager-applet"
+            DE="cmake qt5-base liri-git-meta network-manager-applet"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo -e "exec liri-session" > /home/$nombre_usuario/.xinitrc
             echo lightdm > DMservice
             lirisesion=true
             ;;
         15) #INICIO lumina
-            DE="cmake lumina-desktop network-manager-applet"
+            DE="cmake qt5-base lumina-desktop network-manager-applet"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo -e "exec start-lumina-desktop" > /home/$nombre_usuario/.xinitrc
             echo lightdm > DMservice
@@ -1533,15 +1533,30 @@ echo "                                           ";
 echo -e '\033[m'
 echo ""
 echo ""
-sleep 5
+sleep 3
 }
 
 
 #titulo_progreso="Actualizando el sistema"
 #barra_progreso
 #pacman -Syu && mensaje_install
-mensaje_install
-sleep 3
+
+echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+echo ""
+echo -e '\033[38;2;255;0;02m'
+echo " █████╗ ██████╗  ██████╗██████╗ ██╗███████╗";
+echo "██╔══██╗██╔══██╗██╔════╝██╔══██╗██║██╔════╝";
+echo "███████║██████╔╝██║     ██████╔╝██║███████╗";
+echo "██╔══██║██╔══██╗██║     ██╔══██╗██║╚════██║";
+echo "██║  ██║██║  ██║╚██████╗██║  ██║██║███████║";
+echo "╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝";
+echo "                                           ";
+echo -e '\033[m'
+echo ""
+echo ""
+sleep 2
+clear
+
 
 titulo_progreso="Instalando Xorg"
 barra_progreso
