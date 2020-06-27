@@ -549,7 +549,7 @@ options=(1 " > | xfce4 | Xfce desktop| <"
          4 " > | gnome | GNOME Classic desktop| <"
          5 " > | gnome-flashback | GNOME 2 desktop| <"
          6 " > | cinnamon | Cinnamon desktop| <"
-         7 " > | budgie-desktop | Budgie desktop| <"
+         7 " > | budgie-desktop | Descarga: 415MB - Budgie desktop| <"
          8 " > | enlightenment | Enlightenment desktop| <"
          9 " > | lxde-gtk3| The Lightweight X11 desktop| <"
          10 " > | lxde | The Lightweight X11 GTK2| <"
@@ -756,7 +756,7 @@ done
             ;;
         
         5)  #INICIO GNOME flashback
-            DE="gnome-flashback gnome-applets sensors-applet gnome-shell"
+            DE="gnome-flashback gnome-tweaks gnome-applets sensors-applet gnome-shell"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo lightdm > DMservice
             ;;
@@ -769,7 +769,7 @@ done
             ;;
 
         7) #INICIO budgie-desktop
-            DE="budgie-desktop gnome gnome-shell gnome-control-center dconf-editor"
+            DE="budgie-desktop gnome gnome-tweaks gnome-shell gnome-control-center dconf-editor"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo -e "export XDG_CURRENT_DESKTOP=Budgie:GNOME\nexec budgie-desktop" > /home/$nombre_usuario/.xinitrc
             echo lightdm > DMservice
@@ -1928,8 +1928,7 @@ sed -i "80i $nombre_usuario ALL=(ALL) ALL" /etc/sudoers
 # cp pacman-chroot.conf /etc/pacman.conf
 clear
 
-titulo_progreso="Actualizando Sistema"
-barra_progreso
+
 sudo -u $nombre_usuario xdg-user-dirs-update --force
 pacman -Syu --noconfirm
 ls -l /home/$nombre_usuario
