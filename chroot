@@ -557,8 +557,8 @@ options=(1 " > | xfce4 | Xfce desktop| <"
          12 " > | mate | Mate GTK3 desktop| <"
          13 " > | ukui | GTK and Qt| <"
          14 " > | liri | AUR - Compilación| <"
-         15 " > | lumina | AUR - Compilación| <")
-         #15 " > | Pantheon | Desktop| <")
+         15 " > | lumina | AUR - Compilación| <"
+         16 " > | Pantheon | Desktop| <")
 
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -827,8 +827,8 @@ done
             echo lightdm > DMservice
             ;;
         16) #INICIO Pantheon
-            DE="onboard orca cmake pantheon-session-git cerbere-git gala-git gnome-settings-daemon-elementary wingpanel-indicator-power-git pantheon-applications-menu-git pantheon-default-settings-git pantheon-print-git pantheon-polkit-agent-git elementary-icon-theme wingpanel-git pantheon-terminal network-manager-applet wingpanel-git plank pantheon-default-settings-git pantheon-polkit-agent-git pantheon-files"
-            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            DE="onboard orca cmake pantheon pantheon-files pantheon-terminal gnome-session gnome-control-center switchboard pantheon-applications-menu wingpanel-indicator-session wingpanel-indicator-datetime wingpanel gtk-theme-elementary contractor file-roller dconf-editor  "
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings  lightdm-pantheon-greeter light-locker accountsservice"
             echo -e "exec cerbere" > /home/$nombre_usuario/.xinitrc
             echo lightdm > DMservice
             ;;
@@ -1541,7 +1541,7 @@ sleep 3
 #barra_progreso
 #pacman -Syu && mensaje_install
 
-echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 echo ""
 echo -e '\033[38;2;255;0;02m'
 echo " █████╗ ██████╗  ██████╗██████╗ ██╗███████╗";
