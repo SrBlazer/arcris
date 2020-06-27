@@ -156,6 +156,8 @@ if ping -c 3 www.google.com &> /dev/null; then
    #--prgbox "ping -c 3 archlinux.org && echo && echo Si Hay Internet!" 17 100   
    clear
    reflector --latest 15 --sort rate --save /etc/pacman.d/mirrorlist
+   cat /etc/pacman.d/mirrorlist
+   sleep 3
    clear
 
 else

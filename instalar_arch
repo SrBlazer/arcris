@@ -867,6 +867,8 @@ username=$(dialog --backtitle "$titulo" --title "|  Creación de usuario  |" \
            " Usuario Nuevo:" 1 1 "user" 1 17 25 30 2>&1 > /dev/tty)
 
 user=$(echo "$username" | sed -n 1p)
+user=$(echo $user | tr '[:upper:]' '[:lower:]')
+
 arch-chroot /mnt /bin/sh -c "useradd -m -g users -s /bin/bash $user"
 while [ $userpasswd != $userpasswd2 ]
 do 
