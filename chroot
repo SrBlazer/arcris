@@ -155,7 +155,8 @@ if ping -c 3 www.google.com &> /dev/null; then
    #dialog --title "|  Conexión a RED  |" --backtitle "$titulo" \
    #--prgbox "ping -c 3 archlinux.org && echo && echo Si Hay Internet!" 17 100   
    clear
-   reflector --latest 15 --sort rate --save /etc/pacman.d/mirrorlist
+   reflector --verbose --latest 15 --sort rate --save /etc/pacman.d/mirrorlist
+   clear
    cat /etc/pacman.d/mirrorlist
    sleep 3
    clear
@@ -554,8 +555,9 @@ options=(1 " > | xfce4 | Xfce desktop| <"
          10 " > | lxde | The Lightweight X11 GTK2| <"
          11 " > | lxqt | LXDE-Qt y Razor-qt projects| <"
          12 " > | mate | Mate GTK3 desktop| <"
-         13 " > | liri | Desktop| <"
-         14 " > | lumina | Desktop| <")
+         13 " > | ukui | GTK and Qt| <"
+         14 " > | liri | Desktop| <"
+         15 " > | lumina | AUR - Compilar| <")
          #15 " > | Pantheon | Desktop| <")
 
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
@@ -806,19 +808,25 @@ done
             echo lightdm > DMservice
             ;;
         
-        13) #INICIO Liri
+        13) #INICIO UKUI 
+            DE="ukui cmake network-manager-applet"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo lightdm > DMservice
+            ;;
+        14) #INICIO Liri
             DE="liri-git-meta network-manager-applet"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo -e "exec liri-session" > /home/$nombre_usuario/.xinitrc
             echo lightdm > DMservice
+            lirisesion=true
             ;;
-        14) #INICIO lumina
-            DE="lumina-desktop-git network-manager-applet"
+        15) #INICIO lumina
+            DE="cmake lumina-desktop network-manager-applet"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo -e "exec start-lumina-desktop" > /home/$nombre_usuario/.xinitrc
             echo lightdm > DMservice
             ;;
-        15) #INICIO Pantheon
+        16) #INICIO Pantheon
             DE="onboard orca cmake pantheon-session-git cerbere-git gala-git gnome-settings-daemon-elementary wingpanel-indicator-power-git pantheon-applications-menu-git pantheon-default-settings-git pantheon-print-git pantheon-polkit-agent-git elementary-icon-theme wingpanel-git pantheon-terminal network-manager-applet wingpanel-git plank pantheon-default-settings-git pantheon-polkit-agent-git pantheon-files"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo -e "exec cerbere" > /home/$nombre_usuario/.xinitrc
@@ -1529,9 +1537,11 @@ sleep 5
 }
 
 
-titulo_progreso="Actualizando el sistema"
-barra_progreso
-pacman -Syu && mensaje_install
+#titulo_progreso="Actualizando el sistema"
+#barra_progreso
+#pacman -Syu && mensaje_install
+mensaje_install
+sleep 3
 
 titulo_progreso="Instalando Xorg"
 barra_progreso
@@ -1550,9 +1560,13 @@ printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
 echo -e ""
 systemctl enable $(cat DMservice) && mensaje_install
 
+if [ "$lirisesion" == "true" ]; then
 
-titulo_progreso="Instalando Terminal del Sistema"
-barra_progreso
+systemctl --user enable liri.service
+systemctl enable liri.service
+systemctl --user isolate liri.target
+
+fi
 
 
 if [ "$TERMINAL_condicion" == "true" ]; then
@@ -1584,7 +1598,10 @@ sudo -u $nombre_usuario yay -S $SH --noeditmenu --noconfirm --needed && mensaje_
 
 titulo_progreso="Instalando Tipografias"
 barra_progreso
-sudo -u $nombre_usuario yay -S gnu-free-fonts ttf-opensans ttf-hack ttf-font-awesome awesome-terminal-fonts noto-fonts-emoji adobe-source-han-sans-jp-fonts adobe-source-han-sans-cn-fonts gnome-font-viewer --noeditmenu --noconfirm --needed && mensaje_install
+sudo -u $nombre_usuario yay -S gnu-free-fonts ttf-opensans ttf-hack ttf-font-awesome awesome-terminal-fonts noto-fonts-emoji gnome-font-viewer --noeditmenu --noconfirm --needed && mensaje_install
+#adobe-source-han-sans-jp-fonts
+#adobe-source-han-sans-cn-fonts
+
 
 
 if [ "$tor_condicion" == "true" ]; then
