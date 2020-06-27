@@ -154,7 +154,9 @@ if ping -c 3 www.google.com &> /dev/null; then
 
    #dialog --title "|  Conexión a RED  |" --backtitle "$titulo" \
    #--prgbox "ping -c 3 archlinux.org && echo && echo Si Hay Internet!" 17 100   
-   echo ""
+   clear
+   reflector --latest 15 --sort rate --save /etc/pacman.d/mirrorlist
+   clear
 
 else
 
@@ -551,8 +553,8 @@ options=(1 " > | xfce4 | Xfce desktop| <"
          11 " > | lxqt | LXDE-Qt y Razor-qt projects| <"
          12 " > | mate | Mate GTK3 desktop| <"
          13 " > | liri | Desktop| <"
-         14 " > | lumina | Desktop| <"
-         15 " > | Pantheon | Desktop| <")
+         14 " > | lumina | Desktop| <")
+         #15 " > | Pantheon | Desktop| <")
 
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -815,7 +817,7 @@ done
             echo lightdm > DMservice
             ;;
         15) #INICIO Pantheon
-            DE="pantheon pantheon-files pantheon-session-git onboard orca cerbere-git gala-git gnome-settings-daemon-elementary wingpanel-indicator-power-git pantheon-applications-menu-git pantheon-default-settings-git pantheon-print-git pantheon-polkit-agent-git elementary-icon-theme wingpanel-git pantheon-terminal network-manager-applet wingpanel-git plank pantheon-default-settings-git pantheon-polkit-agent-git pantheon-files"
+            DE="onboard orca cmake pantheon-session-git cerbere-git gala-git gnome-settings-daemon-elementary wingpanel-indicator-power-git pantheon-applications-menu-git pantheon-default-settings-git pantheon-print-git pantheon-polkit-agent-git elementary-icon-theme wingpanel-git pantheon-terminal network-manager-applet wingpanel-git plank pantheon-default-settings-git pantheon-polkit-agent-git pantheon-files"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo -e "exec cerbere" > /home/$nombre_usuario/.xinitrc
             echo lightdm > DMservice
@@ -947,33 +949,42 @@ do
     case $choice in
         1)
             TERMI1="lxterminal"
+            TERMINAL_condicion=true
             ;;
         2)
             TERMI2="tilix"
+            TERMINAL_condicion=true
             ;;
         3)
             TERMI3="xfce4-terminal"
+            TERMINAL_condicion=true
             ;;
         4)
             TERMI4="deepin-terminal"
+            TERMINAL_condicion=true
             ;;
         
         5)
             TERMI5="mate-terminal"
+            TERMINAL_condicion=true
             ;;
 
         6)
             TERMI6="terminator"
+            TERMINAL_condicion=true
             ;;
                
         7)
             TERMI7="sakura"
+            TERMINAL_condicion=true
             ;;   
-        7)
+        8)
             TERMI8="alacritty"
+            TERMINAL_condicion=true
             ;;   
-        7)
+        9)
             TERMI9="kitty"
+            TERMINAL_condicion=true
             ;;   
     esac
 done
@@ -1540,7 +1551,13 @@ systemctl enable $(cat DMservice) && mensaje_install
 
 titulo_progreso="Instalando Terminal del Sistema"
 barra_progreso
+
+
+if [ "$TERMINAL_condicion" == "true" ]; then
+titulo_progreso="Instalando Terminal Seleccionada"
+barra_progreso
 sudo -u $nombre_usuario yay -S $TERMI --noeditmenu --noconfirm --needed && mensaje_install
+    fi
 
 
 titulo_progreso="Instalando Utilidades del Sistema"
