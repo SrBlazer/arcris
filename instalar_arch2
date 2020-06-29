@@ -877,10 +877,12 @@ barra_progreso
 pacstrap /mnt base base-devel reflector nano
 arch-chroot /mnt /bin/bash -c "reflector --latest 15 --sort rate --save /mnt/etc/pacman.d/mirrorlist"
 cat /mnt/etc/pacman.d/mirrorlist 
-cp pacman.conf /mnt/etc/pacman.conf
+
 
 if [ "$selecLinuxStable" == "true" ]; then
 arch-chroot /mnt /bin/bash -c "pacman -Sy linux linux-headers linux-firmware mkinitcpio --noconfirm"
+cp pacman.conf /mnt/etc/pacman.conf
+arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy cryptsetup lvm2 logrotate nano --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm"
@@ -898,6 +900,8 @@ fi
 
 if [ "$selecLinuxHard" == "true" ]; then
 arch-chroot /mnt /bin/bash -c "pacman -Sy linux-hardened linux-hardened-headers linux-firmware mkinitcpio --noconfirm"
+cp pacman.conf /mnt/etc/pacman.conf
+arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy cryptsetup lvm2 logrotate nano --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm"
@@ -907,6 +911,8 @@ arch-chroot /mnt /bin/bash -c "pacman -Sy hddtemp alsi inxi-git unzip zip yay-bi
 
 if [ "$selecLinuxLts" == "true" ]; then
 arch-chroot /mnt /bin/bash -c "pacman -Sy linux-lts linux-lts-headers linux-firmware mkinitcpio --noconfirm"
+cp pacman.conf /mnt/etc/pacman.conf
+arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy cryptsetup lvm2 logrotate nano --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm"
@@ -925,6 +931,8 @@ sleep 3
 
 if [ "$selecLinuxZen" == "true" ]; then
 arch-chroot /mnt /bin/bash -c "pacman -Sy linux-zen linux-zen-headers linux-firmware mkinitcpio --noconfirm"
+cp pacman.conf /mnt/etc/pacman.conf
+arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy cryptsetup lvm2 logrotate nano --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm"
