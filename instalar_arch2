@@ -665,8 +665,8 @@ arch-chroot /mnt /bin/bash -c "systemctl enable bluetooth.service"
 
 ### KERNEL 
 
-kernel_var=0 
-while [ "$kernel_var" = "0" ] ; do
+#kernel_var=0 
+#while [ "$kernel_var" = "0" ] ; do
 
   kernel_select=`dialog --title "| KERNEL LINUX |" --backtitle "$titulo" \
     --stdout --ok-label "Seleccionar" --no-cancel --menu "Elige que kernel necesitas: \nLinux Stable es la mejor opción para iniciar\nLas otras opciones tienen un estilo diferente para instalar Drivers\nLas otras modificaciones del kernel trabajan con Drivers Libres" 16 0 2000 linux-stable "Kernel en su versión estable y módulos de Vanilla Linux" linux-hardened "Kernel enfocado en Seguridad" linux-lts "Kernel con soporte de larga duración" linux-zen "Kernel del esfuerzo colaborativo de varios hackers"`
@@ -802,7 +802,7 @@ done
   
   
   fi
-done
+#done
 
 
 ### FIN KERNEL 
