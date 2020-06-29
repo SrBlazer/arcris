@@ -665,8 +665,8 @@ arch-chroot /mnt /bin/bash -c "systemctl enable bluetooth.service"
 
 ### KERNEL 
 
-#kernel_var=0 
-#while [ "$kernel_var" = "0" ] ; do
+kernel_var=0 
+while [ "$kernel_var" = "0" ] ; do
 
   kernel_select=`dialog --title "| KERNEL LINUX |" --backtitle "$titulo" \
     --stdout --ok-label "Seleccionar" --no-cancel --menu "Elige que kernel necesitas: \nLinux Stable es la mejor opción para iniciar\nLas otras opciones tienen un estilo diferente para instalar Drivers\nLas otras modificaciones del kernel trabajan con Drivers Libres" 16 0 2000 linux-stable "Kernel en su versión estable y módulos de Vanilla Linux" linux-hardened "Kernel enfocado en Seguridad" linux-lts "Kernel con soporte de larga duración" linux-zen "Kernel del esfuerzo colaborativo de varios hackers"`
@@ -679,6 +679,7 @@ arch-chroot /mnt /bin/bash -c "systemctl enable bluetooth.service"
     then      
     selec8168=true
     install8169=r8168
+    fi
 
 cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" \
 --no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 12 70 10)
@@ -744,7 +745,7 @@ done
     then      
     selec8168lts=true
     install8169=r8168-lts
-
+    fi
 cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" \
 --no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Selecciona los modulos que necesitas\n[ ESPACIO ] - Para marcar o desmarcar *" 12 70 10)
 options=(1 "Microcode del Procesador" on    # any option can be set to default to "on"
@@ -802,7 +803,7 @@ done
   
   
   fi
-#done
+done
 
 
 ### FIN KERNEL 
