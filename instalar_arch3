@@ -2309,7 +2309,7 @@ clear
 arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
 export $(cat /mnt/etc/locale.conf)
 
-cp pacman-chroot.conf /mnt/etc/pacman.conf
+#cp pacman-chroot.conf /mnt/etc/pacman.conf
 echo ""
 echo ""
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm" 
@@ -2726,11 +2726,6 @@ rm DMservice
 rm GPUvirt
 clear
 
-sed -i '80d' /mnt/etc/sudoers
-sed -i "80i $nombre_usuario ALL=(ALL) ALL" /mnt/etc/sudoers
-# cp pacman-chroot.conf /etc/pacman.conf
-clear
-
 
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario xdg-user-dirs-update --force"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
@@ -2751,7 +2746,10 @@ arch-chroot /mnt /bin/bash -c "systemctl start dhcpcd NetworkManager"
 clear
 ####################################################################
 
-
+sed -i '80d' /mnt/etc/sudoers
+sed -i "80i $nombre_usuario ALL=(ALL) ALL" /mnt/etc/sudoers
+# cp pacman-chroot.conf /etc/pacman.conf
+clear
 
 
 
