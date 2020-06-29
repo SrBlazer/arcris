@@ -475,7 +475,7 @@ hwclock --systohc
 timedatectl status | dialog --no-collapse --cr-wrap --backtitle "$titulo" --progressbox "| Hora Local - Espere... |" 13 65; sleep 5
 clear
 pacman -Sy archlinux-keyring --noconfirm | dialog --no-collapse --cr-wrap --backtitle "$titulo" --progressbox "| Claves Actualizadas del LiveCD, Espere... |" 25 100; sleep 3
-cp pacman.conf /etc/pacman.conf
+#cp pacman.conf /etc/pacman.conf
 
 pacman -Sy reflector --noconfirm | dialog --no-collapse --cr-wrap --backtitle "$titulo" --progressbox "| Instalando paquetes en el LiveCD, espere... |" 25 80; sleep 3
 reflector --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
@@ -858,7 +858,7 @@ kernel=$(arch-chroot /mnt uname -a | tail -c -6)
 
 if [ "$VM" == "true" ]; then
     
-            arch-chroot /mnt /bin/bash -c "inxi -Gx" | dialog --no-collapse --cr-wrap --backtitle "Instalación de ArchLinux - https://t.me/ArchLinuxCristo" --progressbox "-| Driver de Vídeo, Espere... |-" 15 100; sleep 5
+            lspci | grep VGA | dialog --no-collapse --cr-wrap --backtitle "Instalación de ArchLinux - https://t.me/ArchLinuxCristo" --progressbox "-| Driver de Vídeo, Espere... |-" 15 100; sleep 5
             case "$virt" in
                 
                 vbox)   if [ "$kernel" == "Linux" ]; then
