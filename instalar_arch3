@@ -2134,9 +2134,11 @@ sleep 3
 clear
 echo "${locale} UTF-8" > /mnt/etc/locale.gen
 arch-chroot /mnt /bin/bash -c "locale-gen" 
-echo "LANG=$locale" > /mnt/etc/locale.conf && cat /mnt/etc/locale.conf 
-arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
-echo "KEYMAP=$keymap" > /mnt/etc/vconsole.conf && cat /mnt/etc/vconsole.conf 
+echo "LANG=$locale" > /mnt/etc/locale.conf
+cat /mnt/etc/locale.conf 
+arch-chroot /mnt /bin/bash -c "export LANG=$locale)" 
+echo "KEYMAP=$keymap" > /mnt/etc/vconsole.conf
+cat /mnt/etc/vconsole.conf 
 sleep 3
 clear
 
