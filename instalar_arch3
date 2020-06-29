@@ -2118,25 +2118,27 @@ titulo_progreso="| Instalando: Base y Base-devel |"
 barra_progreso
 
 pacstrap /mnt base base-devel reflector nano
+clear
 arch-chroot /mnt /bin/bash -c "reflector --latest 15 --sort rate --save /mnt/etc/pacman.d/mirrorlist"
 cat /mnt/etc/pacman.d/mirrorlist 
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 
 #FSTAB
+clear
 rm /mnt/etc/fstab 
 genfstab -p /mnt > /mnt/etc/fstab 
 cat /mnt/etc/fstab
 sleep 3
 
 # Idioma
-
+clear
 echo "${locale} UTF-8" > /mnt/etc/locale.gen
 arch-chroot /mnt /bin/bash -c "locale-gen" 
 echo "LANG=$locale" > /mnt/etc/locale.conf && cat /mnt/etc/locale.conf 
 arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
-
 echo "KEYMAP=$keymap" > /mnt/etc/vconsole.conf && cat /mnt/etc/vconsole.conf 
-
+sleep 3
+clear
 
 #Zona Horaria
 if [ "$zonadefaultNo" == "true" ]; then
