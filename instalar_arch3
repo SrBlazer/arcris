@@ -2133,14 +2133,11 @@ sleep 3
 # Idioma
 clear
 echo "${locale} UTF-8" > /mnt/etc/locale.gen
-arch-chroot /mnt locale-gen
-echo "LANG=$locale" > /mnt/etc/locale.conf
-cat /mnt/etc/locale.conf 
-arch-chroot /mnt export $(cat /mnt/etc/locale.conf)
-echo "KEYMAP=$keymap" > /mnt/etc/vconsole.conf
-cat /mnt/etc/vconsole.conf 
+arch-chroot /mnt /bin/bash -c "locale-gen" 
+echo "LANG=$locale" > /mnt/etc/locale.conf && cat /mnt/etc/locale.conf 
+arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
+echo "KEYMAP=$keymap" > /mnt/etc/vconsole.conf && cat /mnt/etc/vconsole.conf 
 sleep 3
-
 
 #Zona Horaria
 if [ "$zonadefaultNo" == "true" ]; then
@@ -2150,7 +2147,7 @@ ln -sf $timezonedir${timezone} /mnt/etc/localtime
 if [ "$zonadefaultYes" == "true" ]; then
 ln -sf /usr/share/zoneinfo/$zonahorariaok /mnt/etc/localtime
     fi
-
+clear
 
 
 if [ "$selecLinuxStable" == "true" ]; then
@@ -2243,6 +2240,7 @@ fi
 
 
 # Usuarios
+clear
 echo "$hostname" > /mnt/etc/hostname
 echo "127.0.1.1 $hostname.localdomain $hostname" 
 cat /mnt/etc/hostname
@@ -2265,10 +2263,11 @@ clear
 uefi=$( parted $disk print | grep -ic gpt )
 
 if [ $uefi == 1 ] && [ -d /sys/firmware/efi ]; then
-
+clear
 titulo_progreso="| SU SISTEMA ES UEFI |"
 barra_progreso
 arch-chroot /mnt pacman -Sy grub efibootmgr os-prober --noconfirm
+clear
 echo ""
 echo '>>> Su disco es GPT | UEFI es el sistema Moderno <<<'
 cat /tmp/partitions | grep gpt 
@@ -2296,11 +2295,11 @@ sleep 3
 clear
 
 else
-
+clear
 titulo_progreso="|  SISTEMA BIOS LEGACY Y DISCO DOS/MBR  |"
 barra_progreso
-
 arch-chroot /mnt pacman -Sy grub os-prober --noconfirm
+clear
 echo "" 
 echo '>>> Su disco es DOS MBR | BIOS Legacy es un sistema antiguo <<<' 
 echo "" 
