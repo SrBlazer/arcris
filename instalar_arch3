@@ -2136,6 +2136,7 @@ echo "${locale} UTF-8" > /mnt/etc/locale.gen
 arch-chroot /mnt /bin/bash -c "locale-gen" 
 echo "LANG=$locale" > /mnt/etc/locale.conf && cat /mnt/etc/locale.conf 
 arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
+export $(cat /mnt/etc/locale.conf)
 echo "KEYMAP=$keymap" > /mnt/etc/vconsole.conf && cat /mnt/etc/vconsole.conf 
 sleep 3
 
@@ -2253,7 +2254,7 @@ sed -i "80i $user ALL=(ALL) NOPASSWD: ALL"  /mnt/etc/sudoers
 arch-chroot /mnt /bin/bash -c "hwclock -w"
 
 arch-chroot /mnt /bin/bash -c "systemctl enable dhcpcd NetworkManager"
-
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario export $(cat /mnt/etc/locale.conf)"
 clear
 
 
