@@ -57,6 +57,8 @@ cp .dialogrc /root
 
 chmod +x *
 
+cp /etc/locale.gen /etc/locale.cristo
+
 echo es_ES.UTF-8 UTF-8 > /etc/locale.gen
 locale-gen
 
@@ -90,7 +92,7 @@ then
         if [ "$menu_inicio_return" = "1" ]
         then
 
-        sh instalar_arch
+        sh instalar_arch4
 
 fi
 

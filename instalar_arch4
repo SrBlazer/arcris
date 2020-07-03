@@ -168,7 +168,7 @@ done
 sed -i '176d' /etc/locale.gen
 sed -i "176i #en_US.UTF-8 UTF-8" /etc/locale.gen
 
-locales="$(cat /etc/locale.gen | grep '.UTF-8 UTF-8' | sed '1,4d' | sed 's/\(.\{1\}\)//')"
+locales="$(cat /etc/locale.cristo | grep '.UTF-8 UTF-8' | sed '1,4d' | sed 's/\(.\{1\}\)//')"
 locale=$(dialog --backtitle "$titulo" --clear --title "| Selecciona tu país |" \
 --menu "\nEjemplos:\nes_PE = Perú\nes_AR = Argentina\nes_MX = Mexico" 25 0 20 ${locales} 2>&1 > /dev/tty)
 
