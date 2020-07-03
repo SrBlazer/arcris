@@ -2359,6 +2359,7 @@ echo "$hostname" > /mnt/etc/hostname
 echo "127.0.1.1 $hostname.localdomain $hostname" > /mnt/etc/hosts
 clear
 cat /mnt/etc/hostname
+echo ""
 cat /mnt/etc/hosts
 
 arch-chroot /mnt /bin/sh -c "echo root:$rootpasswd | chpasswd"
@@ -2369,6 +2370,12 @@ sed -i "80i $user ALL=(ALL) NOPASSWD: ALL"  /mnt/etc/sudoers
 arch-chroot /mnt /bin/bash -c "hwclock -w"
 
 arch-chroot /mnt /bin/bash -c "systemctl enable dhcpcd NetworkManager"
+
+clear
+
+cp pacman-chroot.conf /mnt/etc/pacman.conf
+
+arch-chroot /mnt pacman -Syu --noconfirm
 
 clear
 
@@ -2442,16 +2449,17 @@ fi
 # FIN GRUB
 
 
-arch-chroot /mnt pacman -Sy xdg-user-dirs --noconfirm
+arch-chroot /mnt /bin/bash -c "pacman -Sy xdg-user-dirs --noconfirm"
 clear
 arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
+clear
 
 
-#cp pacman-chroot.conf /mnt/etc/pacman.conf
 echo ""
 echo ""
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm" 
-echo "" && echo ""
+echo ""
+echo ""
 arch-chroot /mnt /bin/bash -c "alsi"
 echo ""
 echo ""
@@ -2958,6 +2966,8 @@ echo ''
 echo ""
 printf "\n| La computadora se reiniciara para finalizar |\n| Cuando este apagada la computadora retire la USB o CD |\n\n"
 sleep 5
+
+cp pacman-chroot.conf /mnt/etc/pacman.conf
 
 arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
 export $(cat /mnt/etc/locale.conf)
