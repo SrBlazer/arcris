@@ -849,18 +849,26 @@ if [ "$VM" == "true" ]; then
                 ;;
                 
                 
-                hyper-v) GPU="xf86-video-fbdev mesa-libgl"                         
+                hyper-v) GPU="xf86-video-fbdev mesa-libgl"
+                         dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado hyper-v\nInstalar: $GPU" 8 80                         
                 ;;
                 
                 
                 qemu) GPU="xf86-video-fbdev mesa mesa-libgl qemu-guest-agent"
                       GPUvirt="qemu-ga"
                       VMqemu=true
-                      dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado VirtualBox\nInstalar: qemu-guest-agent" 8 80                   
+                      dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado Qemu\nInstalar: $GPU" 8 80                   
+                ;;
+
+                kvm)  GPU="xf86-video-fbdev mesa mesa-libgl qemu-guest-agent"
+                      GPUvirt="qemu-ga"
+                      VMqemu=true
+                      dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado Qemu\nInstalar: $GPU" 8 80                   
                 ;;
                 
                 
-                *)      GPU="xf86-video-fbdev mesa-libgl"
+                *)    GPU="xf86-video-fbdev mesa-libgl"
+                      dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado MESA\nInstalar: $GPU" 8 80 
                 ;;
                 
             esac
