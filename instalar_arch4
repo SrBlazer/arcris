@@ -27,29 +27,21 @@ esac
 fi
 
 
-#Desmontamos todo disco y swapoff
-swapdisco=$( fdisk -l | grep "/dev/\|swap" | grep swap | awk -F ' ' '{print $1}' )
-umount -R /mnt
-swapoff ${swapdisco}
-swapoff -a
-swapon -a
-
-
 
 while true; do
 choice=$(dialog --keep-tite --backtitle "$tituloInicio" --title "-| Arcris |-" \
 --ok-label '*Seleccionar*' --nocancel --column-separator "|" --no-tags \
 --menu "\nSeleccione una opción a continuación utilizando las teclas\n[FLECHA ARRIBA] / [FLECHA ABAJO] y [ESPACIO] o [ENTER]\
 \nLas teclas alternativas también se pueden usar: [+], [-] y [TAB]. \n " 21 70 11 \
-1 "HOSTNAME | Establecer el nombre del computador" \
-2 "TIMEZONE | Establecer la zona horaria del sistema" \
-3 "LANGUAGE | Establecer el idioma del sistema" \
-4 "USERS | Establecer clave /root y usuario nuevo" \
-5 "DISK | Particionar la unidad de instalación" \
-6 "KERNEL | Establecer el kernel del sistema" \
-7 "DRIVER VIDEO | Establecer el driver de video del sistema" \
-8 "(DE) or (WM) | Establecer un Escritorio o Gestor de Ventanas" \
-9 "EXTRA PROGRAMS | Selecciona programas extras del sistema" \
+1 "1 HOSTNAME | Establecer el nombre del computador" \
+2 "2 TIMEZONE | Establecer la zona horaria del sistema" \
+3 "3 LANGUAGE | Establecer el idioma del sistema" \
+4 "4 USERS | Establecer clave /root y usuario nuevo" \
+5 "5 DISK | Particionar la unidad de instalación" \
+6 "6 KERNEL | Establecer el kernel del sistema" \
+7 "7 DRIVER VIDEO | Establecer el driver de video del sistema" \
+8 "8 (DE) or (WM) | Establecer un Escritorio o Gestor de Ventanas" \
+9 "9 EXTRA PROGRAMS | Selecciona programas extras del sistema" \
 10 "INSTALL | Instalar Arch Linux" 3>&1 1>&2 2>&3)
 
 case "$choice" in
@@ -239,6 +231,16 @@ dialog --backtitle "$titulo" --title "| Clave Correcta |" --msgbox '\n\nContrase
 
 "5")
 ## INICIO DE DISK 
+
+#Desmontamos todo disco y swapoff
+swapdisco=$( fdisk -l | grep "/dev/\|swap" | grep swap | awk -F ' ' '{print $1}' )
+umount -R /mnt
+swapoff ${swapdisco}
+swapoff -a
+swapon -a
+
+rm /mnt/etc/fstab 
+
 dialog --backtitle "$titulo" --title "-| Mensaje |-" --msgbox "\n> UEFI trabaja con discos en GPT \n\n> UEFI su partición boot es formateada en FAT32 \n\n> BIOS LEGACY trabaja con discos en DOS/MBR\n\n> BIOS LEGACY su partición boot es formateada en EXT4\n( La partición boot en linux es opcional )" 13 60
 
 
@@ -613,6 +615,10 @@ done
     ;;
 esac    
 
+genfstab -U -p /mnt > /mnt/etc/fstab 
+dialog --backtitle "-| Instalación de ArchLinux - https://t.me/ArchLinuxCristo |-" --title "| Archivo FSTAB |"   --stdout --ok-label 'Siguiente' --msgbox "$(cat /mnt/etc/fstab)" 20 1000
+
+
 clear
 partprobe
 clear
@@ -770,7 +776,7 @@ dialog --backtitle "$titulo" \
 --msgbox "\n> Si esta usando Maquina virtual la selección de Driver de Video es: \
 \n  [Automatico] \n \
 \n> Si esta usando Hardware real tiene dos opciones para seleccionar: \
-\n  [Automatico] o [Manual] \n" 10 75
+\n  [Automatico] o [Manual] \n" 11 75
 
 #Inicio de Video
 VM=false
@@ -845,7 +851,7 @@ if [ "$VM" == "true" ]; then
                 ;;
                 
                 vmware) GPU="xf86-video-vmware xf86-input-vmmouse open-vm-tools net-tools gtkmm mesa mesa-libgl"
-                        dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado VMware\nInstalar: xf86-video-vmware" 8 80
+                        dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado VMware\nInstalar: $GPU" 8 80
                 ;;
                 
                 
@@ -1061,6 +1067,413 @@ fi
 
 "8")
 ## INICIO DE (DE) or (WM)
+
+cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "$titulo" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Selecciona tu (DE) o (WM) a instalar" 9 50 9)
+
+options=(1 "Entorno de escritorio | (DE)"
+         2 "Gestor de ventanas | (WM)")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+        1) #INICIO (DE)           
+cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "$titulo" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Selecciona tu escritorio a instalar - (DE)" 22 60 19)
+
+options=(1 " > | xfce4 | Xfce desktop| <"
+         2 " > | plasma | KDE Plasma desktop| <"
+         3 " > | deepin | Deepin desktop| <"
+         4 " > | gnome | GNOME Classic desktop| <"
+         5 " > | gnome-flashback | GNOME 2 desktop| <"
+         6 " > | cinnamon | Cinnamon desktop| <"
+         7 " > | budgie-desktop | Descarga: 415MB - Budgie desktop| <"
+         8 " > | enlightenment | Enlightenment desktop| <"
+         9 " > | lxde-gtk3| The Lightweight X11 desktop| <"
+         10 " > | lxde | The Lightweight X11 GTK2| <"
+         11 " > | lxqt | LXDE-Qt y Razor-qt projects| <"
+         12 " > | mate | Mate GTK3 desktop| <"
+         13 " > | ukui | En Prueba| <"
+         14 " > | liri | AUR - Compilación| <"
+         15 " > | lumina | AUR - Compilación| <")
+         #16 " > | Pantheon | Desktop| <")  GTK and Qt
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+        
+###########SELECCION (DE)
+        1) #XFCE4
+
+#cp -rf xfce4/.config/* /root/.config/
+#chmod +777 xfce4
+#chown -hR $nombre_usuario:users /home/$nombre_usuario/.config
+
+#zip -r xfce4.zip .config
+
+xfce4tema=false
+
+cmd=(dialog --keep-tite --backtitle "$titulo" \
+--no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Decide en instalar o personalizar las opciones\n\n \
+xfce4 xfce4-goodies network-manager-applet alacarte \n\nSelecciona una opción para XFCE4 \n" 14 60 19)
+
+options=(1 "Predeterminado || Una mejor experiencia con tema"
+         2 "Escritorio vacio || Sin tema con paquetes extras"
+         3 "Personalizar || Especificar Paquetes básicos")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+        
+        1)  DE="xfce4 xfce4-goodies network-manager-applet alacarte papirus-icon-theme deepin-icon-theme sierra-gtk-theme-git gnu-free-fonts gnome-font-viewer tumbler ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo lightdm > DMservice
+            xfce4tema=true
+            ;;
+            
+        2)  DE="xfce4 xfce4-goodies network-manager-applet alacarte ttf-hack ttf-inconsolata gnome-font-viewer tumbler ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo lightdm > DMservice
+            ;;
+            
+        3)  cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --checklist "Seleeciona paquetes extras del escritorio XFCE4\n[ ESPACIO ] - Para marcar o desmarcar *" 12 70 19)
+            options=(1 "xfce4-goodies || Programas extras de xfce4" off    # any option can be set to default to "on"
+                     2 "network-manager-applet || Gestionar conexiones de red" off
+                     3 "alacarte || Editar entradas" off)
+            choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+            for choice in $choices
+            do
+                case $choice in
+                    1)
+                        xfce4_2="xfce4-goodies"
+                        ;;
+                    2)
+                        xfce4_3="network-manager-applet"
+                        ;;
+                    3)
+                        xfce4_4="alacarte"
+                        ;;
+                esac
+            done
+            xfce4="xfce4 gnu-free-fonts ttf-hack ttf-inconsolata gnome-font-viewer tumbler ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer"
+            DE="$xfce4 $xfce4_2 $xfce4_3 $xfce4_4"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo lightdm > DMservice
+            ;;
+    esac
+done
+######FINAL XFCE4
+            ;;
+
+        2)  #KDE
+            cmd=(dialog --keep-tite --backtitle "$titulo" \
+--no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Decide en instalar o personalizar las opciones\n\n \
+plasma kdebase discover Menu-Global \n\nSelecciona una opción para Plasma KDE \n" 14 60 19)
+
+options=(1 "Predeterminado || Una mejor experiencia con tema"
+         2 "Escritorio vacio || Sin tema sin paquetes extras"
+         3 "Personalizar || Especificar Paquetes básicos")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+        
+        1)  DE="plasma dolphin kate kdialog keditbookmarks kfind khelpcenter konqueror kwrite vlc konsole flameshot appmenu-gtk-module libdbusmenu-glib libdbusmenu-gtk3 libdbusmenu-gtk2 deepin-icon-theme gnu-free-fonts ttf-hack ttf-inconsolata gnome-font-viewer discover packagekit-qt5 colord-kde kscreen powerdevil kdegraphics-thumbnailers ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer user-manager kdeconnect sshfs ttf-liberation ttf-dejavu qt5ct"
+            DM="sddm libxcb qt5-virtualkeyboard"
+            echo sddm > DMservice
+            plasmatema=true
+            ;;
+            
+        2)  DE="plasma dolphin kate kdialog keditbookmarks kfind khelpcenter konqueror kwrite konsole gnu-free-fonts ttf-hack discover"
+            DM="sddm libxcb qt5-virtualkeyboard"
+            echo sddm > DMservice
+            ;;
+            
+        3)  cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" \
+            --no-tags --ok-label '< Seleccionar >' --nocancel --checklist "Seleeciona paquetes del escritorio KDE\n[ ESPACIO ] - Para marcar o desmarcar *" 15 70 19)
+            options=(1 "kde-applications || Programas extras de KDE" off 
+                     2 "appmenu-gtk || Global Menu GTK2/GTK3" off
+                     3 "bluedevil || Bluetooth" off
+                     4 "print-manager || Impresoras" off
+                     5 "latte-dock || Dock Plasma" off
+                     6 "discover || Tienda KDE" off)
+            
+            choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+            clear
+            for choice in $choices
+            do
+                case $choice in
+                    1)
+                        KDE2="kde-applications"
+                        ;;
+                    2)
+                        KDE3="appmenu-gtk-module libdbusmenu-glib libdbusmenu-gtk3 libdbusmenu-gtk2"
+                        ;;
+                    3)
+                        KDE4="bluedevil"
+                        ;;
+                    4)
+                        KDE5="print-manager cups"
+                        ;;
+                    5)
+                        KDE6="latte-dock"
+                        ;;
+                    6)
+                        KDE7="discover"
+                        ;;
+                esac
+            done
+
+            KDE="plasma dolphin kate kdialog keditbookmarks kfind khelpcenter konqueror kwrite gnu-free-fonts ttf-hack ttf-inconsolata gnome-font-viewer discover packagekit-qt5 colord-kde kscreen powerdevil kdegraphics-thumbnailers ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer user-manager kdeconnect sshfs ttf-liberation ttf-dejavu qt5ct"
+
+            DE="$KDE $KDE2 $KDE3 $KDE4 $KDE5 $KDE6 $KDE7"            
+            DM="sddm libxcb qt5-virtualkeyboard"
+            echo sddm > DMservice
+            ;;
+    esac
+done
+######FINAL KDE PLASMA
+           ;;
+
+
+        3) #DEEPIN
+            cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" --no-tags --ok-label '< Seleccionar >' \
+                --nocancel --checklist "Seleeciona paquetes del escritorio Deepin\n[ ESPACIO ] - Para marcar o desmarcar *" 14 100 19)
+            options=(2 "> deepin-topbar" off
+                     3 "> deepin-dock-plugin-arch-update" off
+                     4 "> deepin-dock-plugin-cmdu-git" off
+                     5 "> deepin-dock-plugin-netspeedandsysteminfo" off
+                     6 "> deepin-dock-plugin-pineappledatetime-git" off
+                     7 "> deepin-dock-plugin-weather-git" off)
+            choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+            clear
+            for choice in $choices
+            do
+                case $choice in
+
+                    2)
+                        deepin2="deepin-topbar"
+                        ;;
+                    3)
+                        deepin3="deepin-dock-plugin-arch-update"
+                        ;;
+                    4)
+                        deepin4="deepin-dock-plugin-cmdu-git"
+                        ;;
+                    5)
+                        deepin5="deepin-dock-plugin-netspeedandsysteminfo"
+                        ;;
+                    6)
+                        deepin6="deepin-dock-plugin-pineappledatetime-git"
+                        ;;
+                    7)
+                        deepin7="deepin-dock-plugin-weather-git"
+                        ;;
+                esac
+            done
+
+            deepin="deepin deepin-extra gnu-free-fonts ttf-hack ttf-inconsolata gnome-font-viewer ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer"
+            DE="$deepin $deepin1 $deepin2 $deepin3 $deepin4 $deepin5 $deepin6 $deepin7"
+
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo lightdm > DMservice
+            
+            ;;
+      ######FINAL DEEPIN
+
+        4)  #INICIO GNOME
+            DE="gnome gnome-shell gnome-tweaks tumbler ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer"
+            DM="gdm"
+            echo gdm > DMservice
+            ;;
+        
+        5)  #INICIO GNOME flashback
+            DE="gnome-flashback gnome-tweaks gnome-applets sensors-applet gnome-shell"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo lightdm > DMservice
+            ;;
+            
+        6) #INICIO cinnamon
+            DE="cinnamon cinnamon-translations"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo -e "exec cinnamon-session" > /home/$nombre_usuario/.xinitrc
+            echo lightdm > DMservice
+            ;;
+
+        7) #INICIO budgie-desktop
+            DE="budgie-desktop gnome gnome-tweaks gnome-shell gnome-control-center dconf-editor"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo -e "export XDG_CURRENT_DESKTOP=Budgie:GNOME\nexec budgie-desktop" > /home/$nombre_usuario/.xinitrc
+            echo lightdm > DMservice
+            ;;
+
+        8)  DE="enlightenment entrance-git terminology network-manager-applet eluminance-git stalonetray"
+            echo -e "exec enlightenment_start" > /home/$nombre_usuario/.xinitrc
+            echo entrance > DMservice
+            ;;
+            
+        9) #INICIO lxde-gtk3
+            DE="lxde-gtk3 lxde-common lxsession openbox lxmed"
+            DM="lxdm-gtk3"
+            echo -e "exec startlxde" > /home/$nombre_usuario/.xinitrc
+            echo lxdm > DMservice
+            ;;
+            
+        10) #INICIO lxde
+            DE="lxde lxde-common lxsession openbox lxmed"
+            DM="lxdm"
+            echo -e "exec startlxde" > /home/$nombre_usuario/.xinitrc
+            echo lxdm > DMservice
+            ;;
+            
+        11) #INICIO lxqt
+            DE="lxqt breeze-icons oxygen-icons lxqt-connman-applet slock xdg-utils-slock"
+            DM="sddm sddm-config-editor-git qt5-virtualkeyboard libxcb"
+            echo -e "exec startlxqt" > /home/$nombre_usuario/.xinitrc
+            echo sddm > DMservice
+            ;;
+        
+        12) #INICIO mate
+            DE="mate mate-extra mate-media mate-menu brisk-menu marco mate-themes libcanberra-pulse mate-panel mate-session-manager mate-screensaver mate-applet-dock mate-applet-streamer mate-power-manager network-manager-applet system-config-printer eom engrampa"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo -e "exec mate-session" > /home/$nombre_usuario/.xinitrc
+            echo lightdm > DMservice
+            ;;
+        
+        13) #INICIO UKUI 
+            DE="ukui cmake network-manager-applet"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo lightdm > DMservice
+            ;;
+        14) #INICIO Liri
+            DE="cmake qt5-base liri-git-meta network-manager-applet"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo -e "exec liri-session" > /home/$nombre_usuario/.xinitrc
+            echo lightdm > DMservice
+            lirisesion=true
+            ;;
+        15) #INICIO lumina
+            DE="cmake qt5-base lumina-desktop network-manager-applet"
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
+            echo -e "exec start-lumina-desktop" > /home/$nombre_usuario/.xinitrc
+            echo lightdm > DMservice
+            ;;
+        16) #INICIO Pantheon
+            DE="onboard orca cmake pantheon pantheon-files pantheon-terminal gnome-session gnome-control-center switchboard pantheon-applications-menu wingpanel-indicator-session wingpanel-indicator-datetime wingpanel gtk-theme-elementary contractor file-roller dconf-editor  "
+            DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings  lightdm-pantheon-greeter light-locker accountsservice"
+            echo -e "exec cerbere" > /home/$nombre_usuario/.xinitrc
+            echo lightdm > DMservice
+            ;;
+
+    esac
+done
+#FIN ESCRITORIO
+            ;;
+        2) #INICIO (WM)
+i3tema=false
+
+cmd=(dialog --keep-tite --backtitle "$titulo" \
+--no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Selecciona tu gestor de ventana a instalar - (WM)" 19 55 16)
+
+options=(1 "> i3wm | 150MB de RAM "
+         2 "> qtile | Disponible <"
+         3 "> dwm | Disponible <" 
+         4 "> fluxbox | Aún no disponible <"
+         5 "> openbox | Aún no disponible <"
+         6 "> blackbox | Aún no disponible <"
+         7 "> Bspwm | Aún no disponible <"
+         8 "> awesome | Aún no disponible <"
+         9 "> cwm | Aún no disponible <"
+         10 "> catwm | Aún no disponible <"
+         11 "> 2bwm | Aún no disponible <"
+         12 "> xmonad | Aún no disponible <")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+        1)  # zip -r i3.zip .config
+
+            cmd=(dialog --keep-tite --backtitle "$titulo" \
+            --no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Cualquier elección trae por defecto:\n> i3-gaps i3blocks i3lock dmenu ly-git rxvt \n\nSelecciona una opción para i3wm \n" 14  73 19)
+
+            options=(1 "Predeterminado || Con Tema || i3-gaps + i3status"
+                     2 "Predeterminado || Con Tema || i3-gaps + bumblebee-status"
+                     3 "Escritorio vacio || Sin Tema || Incluye todo lo minimo para i3wm")
+
+            choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+            for choice in $choices
+            do
+                case $choice in
+                    
+                    1)  i3wm="i3-gaps i3blocks i3lock i3status dmenu rofi rxvt-unicode"
+                        i3wm1="tumbler ffmpegthumbs ffmpegthumbnailer raw-thumbnailer freetype2"
+                        i3wm2="network-manager-applet polkit-gnome gnome-keyring lxappearance"
+                        i3wm3="ttf-hack gnu-free-fonts awesome-terminal-fonts"
+                        i3wm4="papirus-icon-theme gnome-themes-extra"
+                        i3wm5="thunar alacritty feh xclip maim"
+                        i3wm6="tk compton-tryone-git i3lock-fancy-git"
+                        WM="$i3wm $i3wm1 $i3wm2 $i3wm3 $i3wm4 $i3wm5 $i3wm6"
+                        DM="ly-git"
+                        echo ly > DMservice
+                        i3tema1=true
+                        # twmn deepin-screenshot-copy-patch xclip
+                        ;;
+
+
+                    2)  i3wm="i3-gaps i3blocks i3lock dmenu rofi rxvt-unicode"
+                        i3wm1="tumbler ffmpegthumbs ffmpegthumbnailer raw-thumbnailer freetype2"
+                        i3wm2="network-manager-applet polkit-gnome gnome-keyring lxappearance"
+                        i3wm3="ttf-hack gnu-free-fonts awesome-terminal-fonts"
+                        i3wm4="papirus-icon-theme gnome-themes-extra"
+                        i3wm5="thunar alacritty feh xclip maim"
+                        i3wm6="bumblebee-status tk compton-tryone-git i3lock-fancy-git"
+                        WM="$i3wm $i3wm1 $i3wm2 $i3wm3 $i3wm4 $i3wm5 $i3wm6"
+                        DM="ly-git"
+                        echo ly > DMservice
+                        i3tema2=true
+                        # twmn deepin-screenshot-copy-patch xclip
+                        ;;
+                        
+                        
+                    3)  WM="i3-gaps i3blocks i3lock i3status dmenu ly-git rxvt-unicode gnome-themes-extra"
+                        DM="ly-git"
+                        echo ly > DMservice
+                        ;;
+                        
+                esac
+            done
+            ;;
+
+        2)
+            WM="qtile python python2 thunar alacritty network-manager-applet polkit-gnome gnome-keyring lxappearance ly-git rxvt-unicode gnome-themes-extra"
+            DM="ly-git"
+            echo ly > DMservice
+            qtile_config=true
+            ;;
+        3)
+            WM="dwm-git dmenu st thunar network-manager-applet polkit-gnome gnome-keyring lxappearance ly-git rxvt-unicode gnome-themes-extra"
+            DM="ly-git"
+            echo ly > DMservice
+            ;;
+        4)
+            echo "Fourth Option"
+            ;;
+    esac
+done
+#FINAL (WM)
+            ;;
+    esac
+done
+
 ;;
 ## FIN DE (DE) or (WM)
 
@@ -1075,6 +1488,7 @@ fi
 
 "10")
 ## INICIO DE INSTALL
+
 # MENSAJE 
 dialog --backtitle "$titulo" \
 --title "| Información |" \
@@ -1084,15 +1498,38 @@ dialog --backtitle "$titulo" \
 \n> Luego configura todo lo seleccionado\n \
 \n> Este script solo es un asistente para una instalación rápida \
 \n> Arcris usa repositorios oficiales de Arch Linux y AUR \
-\n> El tiempo de instalación depende de los paquetes seleccionado " 14 73
-
+\n> El tiempo de instalación depende de los paquetes seleccionado \
+\n> Al terminar el equipo se reiniciara con su sistema instalado" 15 73
 clear
-exit
-;;
-## FIN DE INSTALL
+echo ""
+timedatectl set-timezone $zonahorariaok
+ntpd -qg
+sleep 3
+hwclock --systohc
+timedatectl status
+sleep 5
+clear
+pacman -Sy archlinux-keyring --noconfirm 
+sleep 2
+#cp pacman.conf /etc/pacman.conf
+pacman -Sy reflector --noconfirm 
+sleep 3
+reflector --verbose --latest 15 --sort rate --save /etc/pacman.d/mirrorlist
+clear
+cat /etc/pacman.d/mirrorlist
+sleep 3
 
-    esac
-done
+###########################################
+############## CHROOT  ####################
+###########################################
+
+nombre_usuario=$user
+
+
+XORG=$"xorg xorg-apps xorg-xinit xorg-twm xterm"
+
+
+
 
 
 
@@ -1107,29 +1544,16 @@ dialog --backtitle "$titulo" \
 \n> Alex             | @nahuelwexd \
 \n> Cargando...      | @konrc \
 \n> Eduard Tolosa    | @edu4rdt " 15 73
+;;
+## FIN DE INSTALL
+
+    esac
+done
 
 
 
 
 
 
-clear
-zonahorariaok=$(curl https://ipapi.co/timezone)
-timedatectl set-timezone $zonahorariaok
-ntpd -qg | dialog --no-collapse --cr-wrap --backtitle "$titulo" --progressbox "| Zona Horaria en LiveCD, Espere... |" 25 80; sleep 3
-hwclock --systohc
-timedatectl status | dialog --no-collapse --cr-wrap --backtitle "$titulo" --progressbox "| Hora Local - Espere... |" 13 65; sleep 5
-clear
-pacman -Sy archlinux-keyring --noconfirm | dialog --no-collapse --cr-wrap --backtitle "$titulo" --progressbox "| Claves Actualizadas del LiveCD, Espere... |" 25 100; sleep 3
-#cp pacman.conf /etc/pacman.conf
 
-pacman -Sy reflector --noconfirm | dialog --no-collapse --cr-wrap --backtitle "$titulo" --progressbox "| Instalando paquetes en el LiveCD, espere... |" 25 80; sleep 3
-reflector --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
-clear
-for i in $(seq 1 100)
-do
-    sleep 0.04 
-    echo $i
-done | dialog --backtitle "$titulo" --title '| Actualizando MirrorLists |' --gauge "\nActualizando MirrorList en el LiveCD..." 7 60 0
 
-cat /etc/pacman.d/mirrorlist | dialog --no-collapse --cr-wrap --backtitle "$titulo" --progressbox "Mirrors List del LiveCD > Actualizadas, espere..." 25 2000; sleep 5
