@@ -1,5 +1,9 @@
 #!/bin/bash
 
+tituloInicio="| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris v2.0 |"
+
+titulo="| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |"
+
 #Variable para zona horaria
 zonahorariaok=$(curl https://ipapi.co/timezone)
 clear
@@ -31,10 +35,6 @@ swapoff -a
 swapon -a
 
 
-
-tituloInicio="| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris v2.0 |"
-
-titulo="| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |"
 
 while true; do
 choice=$(dialog --keep-tite --backtitle "$tituloInicio" --title "-| Arcris |-" \
