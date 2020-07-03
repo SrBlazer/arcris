@@ -778,6 +778,7 @@ VMbox=false
 VMqemu=false
 
 infovideo () {
+clear
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "_"
 echo -e ""
 echo -e "\t\t\t         | Info Hardware de Video |          "
@@ -820,14 +821,15 @@ read line
     esac
     
     ####################################################################
-kernel=$(arch-chroot /mnt uname -a | tail -c -6)
+
 
 if [ "$VM" == "true" ]; then
     
             infovideo
             case "$virt" in
                 
-                vbox)   if [ "$kernel" == "Linux" ]; then
+                vbox)   kernel=$(arch-chroot /mnt uname -a | tail -c -6)
+                        if [ "$kernel" == "Linux" ]; then
                             GPU="virtualbox-guest-utils xf86-video-vmware virtualbox-host-modules-arch mesa mesa-libgl"
                             GPUvirt="vboxservice"
                             echo $GPUvirt | awk -F " " '{print $1}' > GPUvirt                            
