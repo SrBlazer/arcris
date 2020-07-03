@@ -1878,14 +1878,10 @@ do
     case $choice in
         1)
             SH="zsh zsh-completions zsh-syntax-highlighting zsh-autosuggestions"
-            cp zshrc /mnt/home/$nombre_usuario/.zshrc
-            cp zshrc /mnt/root/.zshrc
             ;;
 
         2)
             SH="bash bash-completion autojump command-not-found"
-            cp .bashrc /mnt/home/$nombre_usuario/.bashrc
-            cp .bashrc-root /mnt/home/$nombre_usuario/.bashrc-root
             ;;
         3)
             SH="dash";;
@@ -2737,13 +2733,32 @@ done
 arch-chroot /mnt /bin/bash -c "localectl set-x11-keymap $keymap"
 clear
 
+            
 
 echo $SH | awk -F " " '{print $1}' >> shell
 SH=$(cat shell)
 arch-chroot /mnt /bin/bash -c "chsh -s /bin/$SH"
 arch-chroot /mnt /bin/bash -c "chsh -s /usr/bin/$SH $nombre_usuario"
 arch-chroot /mnt /bin/bash -c "chsh -s /bin/$SH $nombre_usuario"
-arch-chroot /mnt /bin/bash -c "cp /root/bashrc /root/.bashrc"
+#arch-chroot /mnt /bin/bash -c "cp /root/bashrc /root/.bashrc"
+
+
+cp .dialogrc /mnt/root
+chmod +x /mnt/root/.dialogrc
+cp .dialogrc /mnt/home/$nombre_usuario/.dialogrc
+chmod +x /mnt/home/$nombre_usuario/.dialogrc
+
+mkdir /mnt/etc/pacman.d/hooks/
+cp mirrorupgrade.hook /mnt/etc/pacman.d/hooks/mirrorupgrade.hook 
+chmod +x /mnt/etc/pacman.d/hooks/mirrorupgrade.hook
+
+cp zshrc /mnt/home/$nombre_usuario/.zshrc
+cp zshrc /mnt/root/.zshrc
+cp .bashrc /mnt/home/$nombre_usuario/.bashrc
+cp .bashrc /mnt/root/.bashrc
+cp .bashrc-root /mnt/home/$nombre_usuario/.bashrc-root
+cp .bashrc-root /mnt/root/.bashrc-root
+
 rm shell
 rm DMservice
 rm GPUvirt
