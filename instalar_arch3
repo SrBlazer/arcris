@@ -2770,11 +2770,7 @@ arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "ls -l /home/$nombre_usuario"
 echo ''
 echo ''
-arch-chroot /mnt /bin/bash -c "alsi"
-echo ''
-echo https://t.me/ArchLinuxCristo 
-mensaje_install
-clear
+
 
 ####################################################################
 clear
@@ -2818,7 +2814,15 @@ done
 
 #nombre_usuario=$(cat /mnt/etc/passwd | grep '/home' | cut -d: -f1) 
 #sed -i "80i $nombre_usuario ALL=(ALL) NOPASSWD: ALL" /mnt/etc/sudoers
-
+echo ''
+echo ''
+mensaje_install
+echo ''
+arch-chroot /mnt /bin/bash -c "alsi"
+echo ''
+echo https://t.me/ArchLinuxCristo 
+echo ''
+echo ''
 echo ""
 printf "\n| La computadora se reiniciara para finalizar |\n| Cuando este apagada la computadora retire la USB o CD |\n\n"
 sleep 5
