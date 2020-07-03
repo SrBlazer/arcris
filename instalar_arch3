@@ -560,7 +560,6 @@ locale=$(dialog --backtitle "$titulo" --clear --title "| Selecciona tu país |" 
 ### ZONA HORARIA
 dialog --backtitle "$titulo" --title "| ZONA HORARIA |" --defaultno --yesno "\n       >>> $zonahorariaok <<<\n\n       ¿Deseas modificarlo?" 8 40 
 
-
 if [ "$?" = "0" ]; then
 
 selected=0 
@@ -594,11 +593,8 @@ do
 done
 
 else
-
 #zone="$(cat timezone)"
-
 zonadefaultYes=true
-
 fi
 ### FIN ZONA HORARIA
 
@@ -2239,8 +2235,10 @@ fi
 # Usuarios
 clear
 echo "$hostname" > /mnt/etc/hostname
-echo "127.0.1.1 $hostname.localdomain $hostname" 
+echo "127.0.1.1 $hostname.localdomain $hostname" > /mnt/etc/hosts
+clear
 cat /mnt/etc/hostname
+cat /mnt/etc/hosts
 
 arch-chroot /mnt /bin/sh -c "echo root:$rootpasswd | chpasswd"
 arch-chroot /mnt /bin/sh -c "useradd -m -g users -s /bin/bash $user"
