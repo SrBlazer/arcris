@@ -5,6 +5,7 @@ tituloInicio="| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Ar
 titulo="| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |"
 
 #Variable para zona horaria
+clear
 zonahorariaok=$(curl https://ipapi.co/timezone)
 clear
 
