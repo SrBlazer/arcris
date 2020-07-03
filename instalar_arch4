@@ -166,8 +166,8 @@ done
 
 
 ### IDIOMA DEL SISTEMA
-sed -i '176d' /etc/locale.gen
-sed -i "176i #en_US.UTF-8 UTF-8" /etc/locale.gen
+sed -i '176d' /etc/locale.cristo
+sed -i "176i #en_US.UTF-8 UTF-8" /etc/locale.cristo
 
 locales="$(cat /etc/locale.cristo | grep '.UTF-8 UTF-8' | sed '1,4d' | sed 's/\(.\{1\}\)//')"
 locale=$(dialog --backtitle "$titulo" --clear --title "| Selecciona tu país |" \
@@ -2250,8 +2250,6 @@ clear
 echo "${locale} UTF-8" > /mnt/etc/locale.gen
 arch-chroot /mnt /bin/bash -c "locale-gen" 
 echo "LANG=$locale" > /mnt/etc/locale.conf && cat /mnt/etc/locale.conf 
-arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
-export $(cat /mnt/etc/locale.conf)
 echo "KEYMAP=$keymap" > /mnt/etc/vconsole.conf && cat /mnt/etc/vconsole.conf 
 sleep 3
 
@@ -2371,7 +2369,7 @@ sed -i "80i $user ALL=(ALL) NOPASSWD: ALL"  /mnt/etc/sudoers
 arch-chroot /mnt /bin/bash -c "hwclock -w"
 
 arch-chroot /mnt /bin/bash -c "systemctl enable dhcpcd NetworkManager"
-arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario export $(cat /mnt/etc/locale.conf)"
+
 clear
 
 
@@ -2447,7 +2445,7 @@ fi
 arch-chroot /mnt pacman -Sy xdg-user-dirs --noconfirm
 clear
 arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
-export $(cat /mnt/etc/locale.conf)
+
 
 #cp pacman-chroot.conf /mnt/etc/pacman.conf
 echo ""
@@ -2961,6 +2959,10 @@ echo ""
 printf "\n| La computadora se reiniciara para finalizar |\n| Cuando este apagada la computadora retire la USB o CD |\n\n"
 sleep 5
 
+arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
+export $(cat /mnt/etc/locale.conf)
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario export $(cat /etc/locale.conf)"
+export $(cat /mnt/etc/locale.conf)
 
 swapdisco=$( fdisk -l | grep "/dev/\|swap" | grep swap | awk -F ' ' '{print $1}' )
 umount -R /mnt
