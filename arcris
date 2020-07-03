@@ -57,9 +57,14 @@ cp .dialogrc /root
 
 chmod +x *
 
-cp /etc/locale.gen /etc/locale.cristo
 
-echo es_ES.UTF-8 UTF-8 > /etc/locale.gen
+sed -i '176d' /etc/locale.gen
+sed -i "176i #en_US.UTF-8 UTF-8" /etc/locale.gen
+
+sed -i '199d' /etc/locale.gen
+sed -i "199i es_ES.UTF-8 UTF-8" /etc/locale.gen
+
+
 locale-gen
 
 echo LANG=es_ES.UTF-8 > /etc/locale.conf
