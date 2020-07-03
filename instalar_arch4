@@ -618,9 +618,8 @@ done
     ;;
 esac    
 
-genfstab -U -p /mnt > /mnt/etc/fstab 
+genfstab -p /mnt >> /mnt/etc/fstab
 dialog --backtitle "-| Instalación de ArchLinux - https://t.me/ArchLinuxCristo |-" --title "| Archivo FSTAB |"   --stdout --ok-label 'Siguiente' --msgbox "$(cat /mnt/etc/fstab)" 20 1000
-
 
 clear
 partprobe
@@ -2242,7 +2241,7 @@ arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 #FSTAB
 clear
 rm /mnt/etc/fstab 
-genfstab -p /mnt > /mnt/etc/fstab 
+genfstab -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 sleep 3
 
@@ -2268,14 +2267,14 @@ clear
 
 
 if [ "$selecLinuxStable" == "true" ]; then
-arch-chroot /mnt /bin/bash -c "pacman -S linux linux-headers linux-firmware mkinitcpio --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -Sy linux linux-headers linux-firmware mkinitcpio --noconfirm"
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
-arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S e2fsprogs less ntp usb_modeswitch usbutils which ntfs-3g mtools exfat-utils cifs-utils --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S hddtemp alsi inxi-git unzip zip yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy cryptsetup lvm2 logrotate nano --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy e2fsprogs less ntp usb_modeswitch usbutils which ntfs-3g mtools exfat-utils cifs-utils --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy hddtemp alsi inxi-git unzip zip yay-bin --noconfirm --needed"
     fi
 
 if [ "$selec8168" == "true" ]; then
@@ -2287,25 +2286,25 @@ sleep 3
 fi
 
 if [ "$selecLinuxHard" == "true" ]; then
-arch-chroot /mnt /bin/bash -c "pacman -S linux-hardened linux-hardened-headers linux-firmware mkinitcpio --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -Sy linux-hardened linux-hardened-headers linux-firmware mkinitcpio --noconfirm"
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
-arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S e2fsprogs less ntp usb_modeswitch usbutils which ntfs-3g mtools exfat-utils cifs-utils --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S hddtemp alsi inxi-git unzip zip yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy cryptsetup lvm2 logrotate nano --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy e2fsprogs less ntp usb_modeswitch usbutils which ntfs-3g mtools exfat-utils cifs-utils --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy hddtemp alsi inxi-git unzip zip yay-bin --noconfirm --needed"
     fi
 
 if [ "$selecLinuxLts" == "true" ]; then
-arch-chroot /mnt /bin/bash -c "pacman -S linux-lts linux-lts-headers linux-firmware mkinitcpio --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -Sy linux-lts linux-lts-headers linux-firmware mkinitcpio --noconfirm"
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
-arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S e2fsprogs less ntp usb_modeswitch usbutils which ntfs-3g mtools exfat-utils cifs-utils --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S hddtemp alsi inxi-git unzip zip yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy cryptsetup lvm2 logrotate nano --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy e2fsprogs less ntp usb_modeswitch usbutils which ntfs-3g mtools exfat-utils cifs-utils --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy hddtemp alsi inxi-git unzip zip yay-bin --noconfirm --needed"
     fi
 
 if [ "$selec8168lts" == "true" ]; then
@@ -2318,14 +2317,14 @@ sleep 3
     
 
 if [ "$selecLinuxZen" == "true" ]; then
-arch-chroot /mnt /bin/bash -c "pacman -S linux-zen linux-zen-headers linux-firmware mkinitcpio --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -Sy linux-zen linux-zen-headers linux-firmware mkinitcpio --noconfirm"
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
-arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S e2fsprogs less ntp usb_modeswitch usbutils which ntfs-3g mtools exfat-utils cifs-utils --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S hddtemp alsi inxi-git unzip zip yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy cryptsetup lvm2 logrotate nano --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy e2fsprogs less ntp usb_modeswitch usbutils which ntfs-3g mtools exfat-utils cifs-utils --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy hddtemp alsi inxi-git unzip zip yay-bin --noconfirm --needed"
     fi
 
 if [ "$microdriverS" == "true" ]; then
