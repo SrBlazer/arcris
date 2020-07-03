@@ -618,8 +618,8 @@ done
     ;;
 esac    
 
-genfstab -p /mnt >> /mnt/etc/fstab
-dialog --backtitle "-| Instalación de ArchLinux - https://t.me/ArchLinuxCristo |-" --title "| Archivo FSTAB |"   --stdout --ok-label 'Siguiente' --msgbox "$(cat /mnt/etc/fstab)" 20 1000
+#genfstab -p /mnt >> /mnt/etc/fstab
+#dialog --backtitle "-| Instalación de ArchLinux - https://t.me/ArchLinuxCristo |-" --title "| Archivo FSTAB |"   --stdout --ok-label 'Siguiente' --msgbox "$(cat /mnt/etc/fstab)" 20 1000
 
 clear
 partprobe
