@@ -3012,8 +3012,7 @@ fi
 ## FIN DE INSTALL
 
 "11")
-clear && echo "" && echo "| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris v2.0 |" && sleep 3 && exit
-
+clear && echo "" && echo "| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris v2.0 |" && echo "" && sleep 3 && exit
 ;;
 
     esac
