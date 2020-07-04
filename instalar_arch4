@@ -2233,13 +2233,15 @@ microdriver (){
 microcode=$(lspci -k | grep 'Host bridge: Intel')
 lspci -k | grep 'Host bridge:'  > procesador
 if [[ $microcode  = *Intel* || $microcode = *intel* || $microcode = *INTEL* ]]
-then            
+then
+clear         
 cat procesador
-arch-chroot /mnt /bin/bash -c "pacman -Sy intel-ucode --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S intel-ucode --noconfirm"
 
 else
+clear
 cat procesador
-arch-chroot /mnt /bin/bash -c "pacman -Sy amd-ucode --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S amd-ucode --noconfirm"
 fi
 
 }
@@ -2249,13 +2251,13 @@ wifidriver (){
 broadcom=$(/bin/bash -c "lspci -k | grep 'Network controller: Broadcom' ")
 if [[ $broadcom  = *Broadcom* || $broadcom = *broadcom* || $broadcom = *BROADCOM* ]]
 then            
-arch-chroot /mnt /bin/bash -c "pacman -Sy broadcom-wl wireless-regdb wpa_supplicant wireless_tools --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S broadcom-wl wireless-regdb wpa_supplicant wireless_tools --noconfirm"
 arch-chroot /mnt /bin/bash -c 'modprobe wl' 
 arch-chroot /mnt /bin/bash -c 'rmmod b43'
 arch-chroot /mnt /bin/bash -c 'rmmod ssb' 
 echo Listo
 else  
-arch-chroot /mnt pacman -Sy iw wireless_tools wpa_supplicant dialog wireless-regdb --noconfirm
+arch-chroot /mnt /bin/bash -c "pacman -S iw wireless_tools wpa_supplicant dialog wireless-regdb --noconfirm"
 fi
 
 }
@@ -2265,23 +2267,23 @@ wifidriverdmks (){
 broadcom=$(arch-chroot /mnt /bin/bash -c "lspci -k | grep 'Network controller: Broadcom' ")
 if [[ $broadcom  = *Broadcom* || $broadcom = *broadcom* || $broadcom = *BROADCOM* ]]
 then      
-arch-chroot /mnt /bin/bash -c "pacman -Sy broadcom-wl-dkms wireless-regdb wpa_supplicant wireless_tools --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S broadcom-wl-dkms wireless-regdb wpa_supplicant wireless_tools --noconfirm"
 arch-chroot /mnt /bin/bash -c 'modprobe wl' 
 arch-chroot /mnt /bin/bash -c 'rmmod b43' 
 arch-chroot /mnt /bin/bash -c 'rmmod ssb' 
 echo listo
 else
-arch-chroot /mnt /bin/bash -c "pacman -Sy iw wireless_tools wpa_supplicant dialog wireless-regdb --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S iw wireless_tools wpa_supplicant dialog wireless-regdb --noconfirm"
 fi
 
 }
 
 touchdriver () {
-arch-chroot /mnt /bin/bash -c "pacman -Sy xf86-input-synaptics xf86-input-libinput xorg-xinput --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S xf86-input-synaptics xf86-input-libinput xorg-xinput --noconfirm"
 }
 
 blutudriver () {
-arch-chroot /mnt /bin/bash -c "pacman -Sy  bluez bluez-utils pulseaudio-bluetooth --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S bluez bluez-utils pulseaudio-bluetooth --noconfirm"
 arch-chroot /mnt /bin/bash -c "systemctl enable bluetooth.service"
 }
 
