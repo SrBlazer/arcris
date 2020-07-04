@@ -2095,9 +2095,10 @@ reflector --verbose --latest 15 --sort rate --save /etc/pacman.d/mirrorlist
 clear
 cat /etc/pacman.d/mirrorlist
 sleep 3
-
-sed -i '199d' /etc/locale.gen
-sed -i "199i es_ES.UTF-8 UTF-8" /etc/locale.gen
+clear
+#sed -i '199d' /etc/locale.gen
+#sed -i "199i es_ES.UTF-8 UTF-8" /etc/locale.gen
+echo "${locale} UTF-8" > /etc/locale.gen
 locale-gen
 echo LANG=es_ES.UTF-8 > /etc/locale.conf
 export LANG=es_ES.UTF-8
