@@ -643,6 +643,11 @@ clear
 "6")
 ## INICIO DE KERNEL 
 ### KERNEL 
+selecLinuxStable=false
+selecLinuxHard=false
+selecLinuxLts=false
+selecLinuxZen=false
+
 
 kernel_var=0 
 while [ "$kernel_var" = "0" ] ; do
@@ -740,7 +745,7 @@ do
         ;;
     esac
 done
-
+  
   selecLinuxLts=true
   kernel_var=1  
 
@@ -768,7 +773,7 @@ do
         ;;
     esac
 done
-
+   
   selecLinuxZen=true
   kernel_var=1
   
@@ -897,8 +902,7 @@ else
 
 dialog --title "-| Driver de Vídeo |-" --yesno "\n¿ Desea instalar de manera automatica su driver de vídeo ? \nPresione Si - Automatico \nPresione No - Manera Manual" 9 62
 case $? in
-   0) inxi -Gx | dialog --no-collapse --cr-wrap --backtitle "Instalación de ArchLinux - https://t.me/ArchLinuxCristo" \
---progressbox "-| Driver de Vídeo, lea su información, espere... |-" 15 100; sleep 7
+   0) infovideo
 
 if (lspci | grep VGA | grep "NVIDIA\|nVidia" &>/dev/null); then
     
@@ -939,8 +943,7 @@ dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Aceptar>"  --msgbo
             
         fi
 ;;
-   1) inxi -Gx | dialog --no-collapse --cr-wrap --backtitle "Instalación de ArchLinux - https://t.me/ArchLinuxCristo" \
-    --progressbox "-| Driver de Vídeo, lea su información, espere... |-" 15 100; sleep 7
+   1) infovideo
 
 GPUHYBR=false
 
@@ -2326,7 +2329,7 @@ arch-chroot /mnt /bin/bash -c "pacman -Sy linux linux-headers linux-firmware mki
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
-arch-chroot /mnt /bin/bash -c "pacman -Sy alsi inxi-git yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy alsi yay-bin --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano hddtemp unzip zip --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
@@ -2346,7 +2349,7 @@ arch-chroot /mnt /bin/bash -c "pacman -Sy linux-hardened linux-hardened-headers 
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
-arch-chroot /mnt /bin/bash -c "pacman -Sy alsi inxi-git yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy alsi yay-bin --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano hddtemp unzip zip --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
@@ -2358,7 +2361,7 @@ arch-chroot /mnt /bin/bash -c "pacman -Sy linux-lts linux-lts-headers linux-firm
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
-arch-chroot /mnt /bin/bash -c "pacman -Sy alsi inxi-git yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy alsi yay-bin --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano hddtemp unzip zip --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
@@ -2379,7 +2382,7 @@ arch-chroot /mnt /bin/bash -c "pacman -Sy linux-zen linux-zen-headers linux-firm
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
-arch-chroot /mnt /bin/bash -c "pacman -Sy alsi inxi-git yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy alsi yay-bin --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano hddtemp unzip zip --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
@@ -2459,7 +2462,7 @@ echo ''
 echo 'Instalando EFI System >> bootx64.efi' 
 arch-chroot /mnt /bin/bash -c 'grub-install --target=x86_64-efi --efi-directory=/efi --removable' 
 echo '' 
-echo 'Instalando EFI System >> grubx64.efi' 
+echo 'Instalando UEFI System >> grubx64.efi' 
 arch-chroot /mnt /bin/bash -c 'grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=Arch'
 ######
 sed -i "6iGRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"" /mnt/etc/default/grub
@@ -2525,7 +2528,7 @@ arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario alsi -l"
 #arch-chroot /mnt /bin/bash -c "alsi -l"
 echo ""
 echo ""
-arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario inxi -Gx"
+#arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario inxi -Gx"
 #arch-chroot /mnt /bin/bash -c "inxi -Gx"
 echo ""
 echo ""
@@ -3029,6 +3032,8 @@ clear
 echo ''
 echo ''
 mensaje_install
+sleep 2
+clear
 echo ''
 #arch-chroot /mnt /bin/bash -c "alsi -l"
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario alsi -l"
