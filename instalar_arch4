@@ -2456,10 +2456,10 @@ echo ""
 echo '>>> Su disco es GPT | UEFI es el sistema Moderno <<<'
 cat /tmp/partitions | grep gpt 
 echo '' 
-echo 'Instalando >> bootx64.efi' 
+echo 'Instalando EFI System >> bootx64.efi' 
 arch-chroot /mnt /bin/bash -c 'grub-install --target=x86_64-efi --efi-directory=/efi --removable' 
 echo '' 
-echo 'Instalando >> grubx64.efi' 
+echo 'Instalando EFI System >> grubx64.efi' 
 arch-chroot /mnt /bin/bash -c 'grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=Arch'
 ######
 sed -i "6iGRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"" /mnt/etc/default/grub
@@ -2521,10 +2521,12 @@ clear
 #arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm" 
 echo ""
 echo ""
-arch-chroot /mnt /bin/bash -c "alsi"
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario alsi -l"
+#arch-chroot /mnt /bin/bash -c "alsi -l"
 echo ""
 echo ""
-arch-chroot /mnt /bin/bash -c "inxi -Gx"
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario inxi -Gx"
+#arch-chroot /mnt /bin/bash -c "inxi -Gx"
 echo ""
 echo ""
 sleep 5
@@ -2908,7 +2910,7 @@ do
         otros)
             selected=0 
             while [ $selected == "0" ];do 
-                locales="$(arch-chroot /mnt /bin/bash -c "localectl list-x11-keymap-layouts | awk '$locales=$locales" Keyboard"'")" && locales=$(echo "$locales") 
+                locales="$(arch-chroot /mnt localectl list-x11-keymap-layouts | awk '$locales=$locales" Keyboard"')" && locales=$(echo "$locales") 
                 keyboard=$(dialog --backtitle "$titulo" --clear --title "-| Distribución del teclado: |-" --menu "\n" 15 0 15   ${locales} 2>&1 > /dev/tty) 
                 if [ $? == 0 ];then 
                     keymap=$keyboard 
@@ -3025,7 +3027,8 @@ echo ''
 echo ''
 mensaje_install
 echo ''
-arch-chroot /mnt /bin/bash -c "alsi"
+#arch-chroot /mnt /bin/bash -c "alsi -l"
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario alsi -l"
 echo ''
 echo https://t.me/ArchLinuxCristo 
 echo ''
