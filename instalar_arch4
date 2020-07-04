@@ -3012,10 +3012,7 @@ fi
 ## FIN DE INSTALL
 
 "11")
-exit
-clear
-echo ""
-echo "| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris v2.0 |"
+exit && clear && echo "" && echo "| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris v2.0 |"
 
 ;;
 
