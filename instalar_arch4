@@ -7,6 +7,8 @@ titulo="| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |
 #Variable para zona horaria
 clear
 zonahorariaok=$(curl https://ipapi.co/timezone)
+echo ""
+echo "Cargando..."
 
 if ping -c 3 www.google.com &> /dev/null; then
   clear
@@ -50,7 +52,7 @@ case "$choice" in
 ##INICIO DE HOSTNAME
 # MENSAJE 
 dialog --backtitle "$titulo" \
---title "| REGLAS EN PERFILES NUEVOS |" \
+--title "| Hostname |" \
 --msgbox "\n> No se permite caracteres especiales\
 \n> Máximo de 8 caracteres\
 \n> Ni letras con tilde\n> Por ejemplo: è, ü, ñ, etc...\
@@ -182,11 +184,11 @@ locale=$(dialog --backtitle "$titulo" --clear --title "| Selecciona tu país |" 
 ## INICIO DE USERS
 # MENSAJE 
 dialog --backtitle "$titulo" \
---title "| REGLAS EN PERFILES NUEVOS |" \
---msgbox "\n> No se permite caracteres especiales\
-\n> Máximo de 8 caracteres\
-\n> Ni letras con tilde\n> Por ejemplo: è, ü, ñ, etc...\
-\n> Ni otros caracteres especiales\n> ~!@#$%^&*_-+=|\(){}[]:;<;>;,.?/ \
+--title "| Clave para root |" \
+--msgbox "\n> Ingresa la clave para el Administrador\
+\n> /root\
+\n> Sugerencia:\
+\n> No use caracteres especiales\n> ~!@#$%^&*_-+=|\(){}[]:;<;>;,.?/ \
 \n\n     >>  Ya que pueden causar errores  <<" 13 50
 
 #Clave para root
@@ -202,6 +204,15 @@ do
 done
 dialog --backtitle "$titulo" --title "-| Clave Correcta |-" --msgbox '\n\nContraseña Conrrecta!' 9 40
 #Clave para root
+
+# MENSAJE 
+dialog --backtitle "$titulo" \
+--title "| Creación de Usuario |" \
+--msgbox "\n> No se permite caracteres especiales\
+\n> Máximo de 8 caracteres\
+\n> Ni letras con tilde\n> Por ejemplo: è, ü, ñ, etc...\
+\n> Ni otros caracteres especiales\n> ~!@#$%^&*_-+=|\(){}[]:;<;>;,.?/ \
+\n\n     >>  Ya que pueden causar errores  <<" 13 50
 
 #USUARIO NUEVO
 username=$(dialog --backtitle "$titulo" --title "|  Creación de usuario  |" \
