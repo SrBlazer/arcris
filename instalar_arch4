@@ -654,6 +654,9 @@ wifidriverdmksS=false
 touchdriverS=false
 blutudriverS=false
 
+selec8168=false
+selec8168lts=false
+
 kernel_var=0 
 while [ "$kernel_var" = "0" ] ; do
 
@@ -2330,11 +2333,11 @@ clear
 
 
 if [ "$selecLinuxStable" == "true" ]; then
-arch-chroot /mnt /bin/bash -c "pacman -Sy linux linux-headers linux-firmware mkinitcpio --noconfirm"
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy alsi yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -S linux linux-headers linux-firmware mkinitcpio --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano hddtemp unzip zip --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
@@ -2350,11 +2353,11 @@ sleep 3
 fi
 
 if [ "$selecLinuxHard" == "true" ]; then
-arch-chroot /mnt /bin/bash -c "pacman -Sy linux-hardened linux-hardened-headers linux-firmware mkinitcpio --noconfirm"
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy alsi yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -S linux-hardened linux-hardened-headers linux-firmware mkinitcpio --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano hddtemp unzip zip --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
@@ -2362,11 +2365,11 @@ arch-chroot /mnt /bin/bash -c "pacman -S e2fsprogs less ntp usb_modeswitch usbut
     fi
 
 if [ "$selecLinuxLts" == "true" ]; then
-arch-chroot /mnt /bin/bash -c "pacman -Sy linux-lts linux-lts-headers linux-firmware mkinitcpio --noconfirm"
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy alsi yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -S linux-lts linux-lts-headers linux-firmware mkinitcpio --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano hddtemp unzip zip --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
@@ -2383,11 +2386,11 @@ sleep 3
     
 
 if [ "$selecLinuxZen" == "true" ]; then
-arch-chroot /mnt /bin/bash -c "pacman -Sy linux-zen linux-zen-headers linux-firmware mkinitcpio --noconfirm"
 cp pacman.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Sy alsi yay-bin --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -S linux-zen linux-zen-headers linux-firmware mkinitcpio --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -S cryptsetup lvm2 logrotate nano hddtemp unzip zip --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S dnsmasq ethtool ndisc6 inetutils wvdial gptfdisk dhcp dhcpcd dhclient ppp netctl networkmanager --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S iwd net-tools ifplugd dialog neofetch git wget lsb-release accountsservice bash-completion --noconfirm --needed"
