@@ -31,7 +31,7 @@ main () {
 
 while true; do
 choice=$(dialog --keep-tite --backtitle "$tituloInicio" --title "-| Arcris |-" \
---ok-label '*Seleccionar*' --cancel-label "*Salir*" --column-separator "|" --no-tags \
+--ok-label '*Seleccionar*' --nocancel --column-separator "|" --no-tags \
 --menu "\nSeleccione una opción a continuación utilizando las teclas\n[FLECHA ARRIBA] / [FLECHA ABAJO] y [ESPACIO] o [ENTER]\
 \nLas teclas alternativas también se pueden usar: [+], [-] y [TAB]. \n " 21 70 11 \
 1 "1 HOSTNAME | Establecer el nombre del computador" \
@@ -43,7 +43,8 @@ choice=$(dialog --keep-tite --backtitle "$tituloInicio" --title "-| Arcris |-" \
 7 "7 DRIVER VIDEO | Establecer el driver de video del sistema" \
 8 "8 (DE) or (WM) | Establecer un Escritorio o Gestor de Ventanas" \
 9 "9 EXTRA PROGRAMS | Selecciona programas extras del sistema" \
-10 "> INSTALL | Instalar Arch Linux" 3>&1 1>&2 2>&3)
+10 "> INSTALL | Instalar Arch Linux" \
+11 "> EXIT | Salir de ArcriS" 3>&1 1>&2 2>&3)
 
 case "$choice" in
 "1")
@@ -3010,12 +3011,16 @@ fi
 ;;
 ## FIN DE INSTALL
 
+"11")
+exit
+clear
+echo ""
+echo "| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris v2.0 |"
+;;
+
     esac
 done
 
 }
 
 main
-clear
-exit
-clear
