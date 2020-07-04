@@ -14,6 +14,7 @@ cd arcris
 sleep 3
 clear
 
+
 red='\033[38;2;255;0;02m'
 echo ""
 echo ""
