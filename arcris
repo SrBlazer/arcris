@@ -2,10 +2,13 @@
 : 'Copyright (C) 2019 Código Cristo'
 #!/bin/bash
 
+# wget is.gd/arcris && sh arcris
+# https://is.gd/stats.php?url=arcris
+
 #Colores
 clear
-pacman -Sy git dialog --noconfirm --needed
-git clone git://github.com/CodigoCristo/arcris
+pacman -Sy git dialog --noconfirm -
+git clone https://github.com/CodigoCristo/arcris
 cd arcris
 clear
 
