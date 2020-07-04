@@ -4,6 +4,11 @@
 
 #Colores
 clear
+pacman -Sy git dialog --noconfirm --needed
+git clone git://github.com/CodigoCristo/arcris
+cd arcris
+clear
+
 red='\033[38;2;255;0;02m'
 echo ""
 echo ""
