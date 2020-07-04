@@ -1678,7 +1678,7 @@ sporitykey=false
 
 cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" \
 --no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' \
---title "-| Reproductores Video y Audio |-" --checklist "\n[ ESPACIO ] - Para marcar o desmarcar *" 19 100 19)
+--title "-| Reproductores Video y Audio |-" --checklist "\n[ ESPACIO ] - Para marcar o desmarcar *" 20 100 19)
 options=(   1 "vlc" on
             2 "mpv" off
             3 "mplayer" off
@@ -1754,14 +1754,14 @@ REPRO=" $REPRO1 $REPRO3 $REPRO4 $REPRO5 $REPRO6 $REPRO7 $REPRO8 $REPRO9 $REPRO10
 
 #NAVEGADORES
 cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" \
---no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Seleeciona tu navegador web\n[ ESPACIO ] - Para marcar o desmarcar *" 14 100 19)
+--no-tags --ok-label '< Siguiente >' --cancel-label '< No deseo esto >' --checklist "Seleeciona tu navegador web\n[ ESPACIO ] - Para marcar o desmarcar *" 15 100 19)
 options=(1 "Firefox | Open source" on    # any option can be set to default to "on"
          2 "Chromium | Open source" off
          3 "Brave | AUR - Open source" off
          4 "Google Chrome | AUR - Proprietary browser" off         
          5 "Opera | Proprietary browser" off
          6 "Vivaldi | AUR - Proprietary browser" off
-         7 "tor-browser | AUR - Open source" off)
+         7 "Tor-browser | AUR - Open source" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -2109,12 +2109,13 @@ sleep 3
 clear
 #sed -i '199d' /etc/locale.gen
 #sed -i "199i es_ES.UTF-8 UTF-8" /etc/locale.gen
-echo "${locale} UTF-8" > /etc/locale.gen
-locale-gen
-echo LANG=es_ES.UTF-8 > /etc/locale.conf
-export LANG=es_ES.UTF-8
-echo ""
-sleep 2
+
+#echo "${locale} UTF-8" > /etc/locale.gen
+#locale-gen
+#echo LANG=es_ES.UTF-8 > /etc/locale.conf
+#export LANG=es_ES.UTF-8
+#echo ""
+#sleep 2
 
 ###########################################
 ############## CHROOT  ####################
@@ -2264,6 +2265,7 @@ arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 #FSTAB
 clear
 rm /mnt/etc/fstab 
+clear
 genfstab -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 sleep 3
@@ -2587,6 +2589,7 @@ mensaje_install
 
 
 if [ "$tor_condicion" == "true" ]; then
+clear
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "_"
 echo -e ""
 echo -e "\t\t\t         Actualizando Keys para Tor browser          "
@@ -2606,6 +2609,7 @@ mensaje_install
 
 
 if [ "$spotify_condicion" == "true" ]; then
+clear
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "_"
 echo -e ""
 echo -e "\t\t\t         Actualizando Keys de Spotify          "
