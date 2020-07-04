@@ -3023,7 +3023,12 @@ fi
 ## FIN DE INSTALL
 
 "11")
-clear && echo "" && echo "| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris |" && echo "" && sleep 3 && exit
+clear && echo "" 
+echo -e ""
+echo -e "\t\t\t| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris |"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
+echo -e ""
+echo "" && sleep 3 && exit
 ;;
 
     esac
