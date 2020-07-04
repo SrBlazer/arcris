@@ -2774,7 +2774,7 @@ arch-chroot /mnt /bin/bash -c "wget https://raw.githubusercontent.com/CodigoCris
 arch-chroot /mnt /bin/bash -c "unzip xfce4.zip"
 arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/* /home/$nombre_usuario/.config/"
 #
-arch-chroot /mnt /bin/bash -c "cp -rf /home/$nombre_usuario/.config/fondo-arch.png /usr/share/backgrounds/xfce/xfce-stripes.png"
+arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/fondo-arch.png /usr/share/backgrounds/xfce/xfce-stripes.png"
 arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/5336864_orig.png /usr/usb.png"
 arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/logo2.png /usr/logo-arch.png"
 arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf"
