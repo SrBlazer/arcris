@@ -2093,6 +2093,14 @@ clear
 cat /etc/pacman.d/mirrorlist
 sleep 3
 
+sed -i '199d' /etc/locale.gen
+sed -i "199i es_ES.UTF-8 UTF-8" /etc/locale.gen
+locale-gen
+echo LANG=es_ES.UTF-8 > /etc/locale.conf
+export LANG=es_ES.UTF-8
+echo ""
+sleep 2
+
 ###########################################
 ############## CHROOT  ####################
 ###########################################
@@ -2971,8 +2979,8 @@ cp pacman-chroot.conf /mnt/etc/pacman.conf
 
 arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
 export $(cat /mnt/etc/locale.conf)
-arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario export $(cat /etc/locale.conf)"
-export $(cat /mnt/etc/locale.conf)
+#arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario export $(cat /etc/locale.conf)"
+#export $(cat /mnt/etc/locale.conf)
 
 swapdisco=$( fdisk -l | grep "/dev/\|swap" | grep swap | awk -F ' ' '{print $1}' )
 umount -R /mnt
