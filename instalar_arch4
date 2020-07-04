@@ -2113,7 +2113,7 @@ sleep 5
 clear
 clear && echo "" 
 echo -e ""
-echo -e "\t\t\t| Actualizando lisa de Keys en LiveCD |"
+echo -e "\t\t\t| Actualizando lista de Keys en LiveCD |"
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
 echo -e ""
 sleep 2
@@ -2286,8 +2286,12 @@ barra_progreso
 
 pacstrap /mnt base base-devel reflector nano
 clear
-arch-chroot /mnt /bin/bash -c "reflector --latest 15 --sort rate --save /mnt/etc/pacman.d/mirrorlist"
-cat /mnt/etc/pacman.d/mirrorlist 
+#arch-chroot /mnt /bin/bash -c "reflector --latest 15 --sort rate --save /mnt/etc/pacman.d/mirrorlist"
+cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist 
+cat /mnt/etc/pacman.d/mirrorlist
+sleep 3
+clear
+arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 
 #FSTAB
@@ -2296,7 +2300,7 @@ clear
 #clear
 genfstab -p /mnt > /mnt/etc/fstab
 arch-chroot /mnt /bin/bash -c "cat /etc/fstab"
-sleep 3
+sleep 4
 
 # Idioma
 clear
