@@ -1081,7 +1081,7 @@ fi
 "8")
 ## INICIO DE (DE) or (WM)
 
-cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "$titulo" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --menu "Selecciona tu (DE) o (WM) a instalar" 9 50 9)
+cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "$titulo" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Selecciona tu (DE) o (WM) a instalar" 9 50 9)
 
 options=(1 "Entorno de escritorio | (DE)"
          2 "Gestor de ventanas | (WM)")
@@ -1392,7 +1392,7 @@ done
 i3tema=false
 
 cmd=(dialog --keep-tite --backtitle "$titulo" \
---no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Selecciona tu gestor de ventana a instalar - (WM)" 19 55 16)
+--no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label '< Seleccionar >' --menu "Selecciona tu gestor de ventana a instalar - (WM)" 19 55 16)
 
 options=(1 "> i3wm | 150MB de RAM "
          2 "> qtile | Disponible <"
