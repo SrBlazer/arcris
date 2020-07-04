@@ -7,7 +7,6 @@ titulo="| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |
 #Variable para zona horaria
 clear
 zonahorariaok=$(curl https://ipapi.co/timezone)
-clear
 
 if ping -c 3 www.google.com &> /dev/null; then
   clear
@@ -44,7 +43,7 @@ choice=$(dialog --keep-tite --backtitle "$tituloInicio" --title "-| Arcris |-" \
 8 "8 (DE) or (WM) | Establecer un Escritorio o Gestor de Ventanas" \
 9 "9 EXTRA PROGRAMS | Selecciona programas extras del sistema" \
 10 "> INSTALL | Instalar Arch Linux" \
-11 "> EXIT | Salir de ArcriS" 3>&1 1>&2 2>&3)
+11 "> EXIT | Salir del Script ArcriS" 3>&1 1>&2 2>&3)
 
 case "$choice" in
 "1")
@@ -3001,7 +3000,7 @@ dialog --backtitle "$titulo" \
 --title "-| Error |-" \
 --msgbox "\n> No selecciono todas las opciones disponibles \
 \n> Esto puede generar errores por falta de información \n \
-\n> Vuelva a seleccionar en orden toda la lista que ofrece el Script <" 10 73
+\n> Vuelva a seleccionar en orden toda la lista que ofrece el Script Arcris <" 10 73
 
 main
 
@@ -3012,7 +3011,7 @@ fi
 ## FIN DE INSTALL
 
 "11")
-clear && echo "" && echo "| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris v2.0 |" && echo "" && sleep 3 && exit
+clear && echo "" && echo "| Visita Nuestra Comunidad - https://t.me/ArchLinuxCristo - by: Arcris |" && echo "" && sleep 3 && exit
 ;;
 
     esac

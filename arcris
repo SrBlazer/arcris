@@ -2,6 +2,7 @@
 : 'Copyright (C) 2019 Código Cristo'
 #!/bin/bash
 
+# @Bourne_Again
 # wget is.gd/arcris && sh arcris
 # https://is.gd/stats.php?url=arcris
 
@@ -17,4 +18,3 @@ chmod +x *
 sleep 2
 clear
 sh arcris-install
-

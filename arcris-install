@@ -5,6 +5,7 @@
 # wget is.gd/arcris && sh arcris
 # https://is.gd/stats.php?url=arcris
 
+clear
 #Colores
 red='\033[38;2;255;0;02m'
 echo ""
