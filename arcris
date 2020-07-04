@@ -7,9 +7,11 @@
 
 #Colores
 clear
-pacman -Sy git dialog --noconfirm -
+pacman -Sy git dialog --noconfirm
+clear
 git clone https://github.com/CodigoCristo/arcris
 cd arcris
+sleep 3
 clear
 
 red='\033[38;2;255;0;02m'
