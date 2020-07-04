@@ -648,6 +648,11 @@ selecLinuxHard=false
 selecLinuxLts=false
 selecLinuxZen=false
 
+microdriverS=false
+wifidriverS=false
+wifidriverdmksS=false
+touchdriverS=false
+blutudriverS=false
 
 kernel_var=0 
 while [ "$kernel_var" = "0" ] ; do
