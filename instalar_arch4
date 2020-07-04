@@ -2768,7 +2768,7 @@ barra_progreso
 arch-chroot /mnt /bin/bash -c "mkdir /home/$nombre_usuario/.config"
 #
 arch-chroot /mnt /bin/bash -c "wget https://raw.githubusercontent.com/CodigoCristo/config/master/xfce4.zip"
-arch-chroot /mnt /bin/bash -c "xfce4.zip"
+arch-chroot /mnt /bin/bash -c "unzip xfce4.zip"
 arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/* /home/$nombre_usuario/.config/"
 #
 arch-chroot /mnt /bin/bash -c "cp -rf /home/$nombre_usuario/.config/fondo-arch.png /usr/share/backgrounds/xfce/xfce-stripes.png"
@@ -2998,6 +2998,35 @@ clear
 
 
 
+#nombre_usuario=$(cat /mnt/etc/passwd | grep '/home' | cut -d: -f1) 
+#sed -i "80i $nombre_usuario ALL=(ALL) NOPASSWD: ALL" /mnt/etc/sudoers
+
+# MENSAJE FINAL
+dialog --backtitle "$titulo" \
+--title "-| CREDITOS |-" --ok-label '- ¡ Gracias Totales ! -' --nocancel \
+--column-separator "|" --msgbox "\n                    + Creador: Codigo Cristo +\n \
+\n+ Aportaciones de la Comunidad: \n \
+\n> Miqueas Martinez | @Miqueas2020 \
+\n> Wilsson Martee   | @Bourne_Again \
+\n> Alex             | @nahuelwexd \
+\n> Cargando...      | @konrc \
+\n> Eduard Tolosa    | @edu4rdt " 15 73
+
+clear
+echo ''
+echo ''
+#mensaje_install
+#sleep 2
+#clear
+#echo ''
+#arch-chroot /mnt /bin/bash -c "alsi -l"
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario alsi -l"
+echo ''
+echo https://t.me/ArchLinuxCristo 
+echo ''
+echo ''
+echo ""
+printf "\n| La computadora se reiniciara para finalizar |\n| Cuando este apagada la computadora retire la USB o CD |\n\n"
 
 #INICIO PROGRESS BARR
 function ProgressBar {
@@ -3022,36 +3051,6 @@ do
 done
 #FIN PROGRESS BARR
 
-#nombre_usuario=$(cat /mnt/etc/passwd | grep '/home' | cut -d: -f1) 
-#sed -i "80i $nombre_usuario ALL=(ALL) NOPASSWD: ALL" /mnt/etc/sudoers
-
-# MENSAJE FINAL
-dialog --backtitle "$titulo" \
---title "-| CREDITOS |-" --ok-label '- ¡ Gracias Totales ! -' --nocancel \
---column-separator "|" --msgbox "\n                    + Creador: Codigo Cristo +\n \
-\n+ Aportaciones de la Comunidad: \n \
-\n> Miqueas Martinez | @Miqueas2020 \
-\n> Wilsson Martee   | @Bourne_Again \
-\n> Alex             | @nahuelwexd \
-\n> Cargando...      | @konrc \
-\n> Eduard Tolosa    | @edu4rdt " 15 73
-
-clear
-echo ''
-echo ''
-mensaje_install
-sleep 2
-clear
-echo ''
-#arch-chroot /mnt /bin/bash -c "alsi -l"
-arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario alsi -l"
-echo ''
-echo https://t.me/ArchLinuxCristo 
-echo ''
-echo ''
-echo ""
-printf "\n| La computadora se reiniciara para finalizar |\n| Cuando este apagada la computadora retire la USB o CD |\n\n"
-sleep 5
 
 cp pacman-chroot.conf /mnt/etc/pacman.conf
 
