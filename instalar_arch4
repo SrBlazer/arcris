@@ -27,7 +27,7 @@ case $? in
 esac
 fi
 
-
+main () {
 
 while true; do
 choice=$(dialog --keep-tite --backtitle "$tituloInicio" --title "-| Arcris |-" \
@@ -2034,6 +2034,7 @@ AUR=" $AUR1 $AUR2 $AUR3 $AUR4 $AUR5 $AUR6 $AUR7 $AUR8 $AUR9 $AUR10 "
    255) echo "[ESC] key pressed.";;
 esac
 
+finalInstall=true
 
 clear
 ;;
@@ -2043,6 +2044,8 @@ clear
 
 "10")
 ## INICIO DE INSTALL
+
+if [ "$finalInstall" == "true" ]; then
 
 # MENSAJE 
 dialog --backtitle "$titulo" \
@@ -2990,9 +2993,26 @@ swapon -a
 
 reboot
 
+else
+
+# MENSAJE 
+dialog --backtitle "$titulo" \
+--title "-| Error |-" \
+--msgbox "\n> No selecciono todas las opciones disponibles \
+\n> Esto puede generar errores por falta de información \n \
+\n> Vuelva a seleccionar en orden toda la lista que ofrece el Script <" 10 73
+
+main
+
+fi
+
 
 ;;
 ## FIN DE INSTALL
 
     esac
 done
+
+}
+
+main
