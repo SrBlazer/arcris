@@ -2753,20 +2753,20 @@ if [ "$xfce4tema" == "true" ]; then
 #TITULO EN BARRAS
 titulo_progreso="Instalando Tema de XFCE4"
 barra_progreso
-
-arch-chroot /mnt /bin/bash -c "git clone https://github.com/CodigoCristo/config.git"
-arch-chroot /mnt /bin/bash -c "unzip config/xfce4.zip"
-arch-chroot /mnt /bin/bash -c "mkdir /home/$nombre_usuario/.config/"
-clear    
-echo -e ""
-echo -e "\t\t\t\tInstalando Tema de XFCE4"
-printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
-echo -e ""
-arch-chroot /mnt /bin/bash -c "cp -rf .config/* /home/$nombre_usuario/.config/"
+#
+arch-chroot /mnt /bin/bash -c "mkdir /home/$nombre_usuario/.config"
+#
+arch-chroot /mnt /bin/bash -c "wget https://raw.githubusercontent.com/CodigoCristo/config/master/xfce4.zip"
+arch-chroot /mnt /bin/bash -c "xfce4.zip"
+arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/* /home/$nombre_usuario/.config/"
+#
+arch-chroot /mnt /bin/bash -c "cp -rf /home/$nombre_usuario/.config/fondo-arch.png /usr/share/backgrounds/xfce/xfce-stripes.png"
 arch-chroot /mnt /bin/bash -c "cp -rf .config/5336864_orig.png /usr/usb.png"
 arch-chroot /mnt /bin/bash -c "cp -rf .config/logo2.png /usr/logo-arch.png"
 arch-chroot /mnt /bin/bash -c "cp -rf .config/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf"
-arch-chroot /mnt /bin/bash -c "rm -R config/"
+#
+arch-chroot /mnt /bin/bash -c "rm -R xfce4/"
+arch-chroot /mnt /bin/bash -c "rm -R xfce4.zip"
 arch-chroot /mnt /bin/bash -c "chown -hR $nombre_usuario:users /home/$nombre_usuario/"
 arch-chroot /mnt /bin/bash -c "chown -hR $nombre_usuario:users /home/$nombre_usuario/.config/"
 sleep 5
@@ -2949,10 +2949,13 @@ cp mirrorupgrade.hook /mnt/etc/pacman.d/hooks/mirrorupgrade.hook
 chmod +x /mnt/etc/pacman.d/hooks/mirrorupgrade.hook
 
 cp zshrc /mnt/home/$nombre_usuario/.zshrc
+arch-chroot /mnt /bin/bash -c "chown -hR $nombre_usuario:users /home/$nombre_usuario/.zshrc"
 cp zshrc /mnt/root/.zshrc
 cp .bashrc /mnt/home/$nombre_usuario/.bashrc
+arch-chroot /mnt /bin/bash -c "chown -hR $nombre_usuario:users /home/$nombre_usuario/.bashrc"
 cp .bashrc /mnt/root/.bashrc
 cp .bashrc-root /mnt/home/$nombre_usuario/.bashrc-root
+arch-chroot /mnt /bin/bash -c "chown -hR $nombre_usuario:users /home/$nombre_usuario/.bashrc-root"
 cp .bashrc-root /mnt/root/.bashrc-root
 
 rm shell
