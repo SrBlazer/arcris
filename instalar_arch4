@@ -2299,8 +2299,9 @@ barra_progreso
 
 pacstrap /mnt base base-devel reflector nano
 clear
-#arch-chroot /mnt /bin/bash -c "reflector --latest 15 --sort rate --save /mnt/etc/pacman.d/mirrorlist"
-cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist 
+arch-chroot /mnt /bin/bash -c "reflector --verbose --latest 15 --sort rate --save /etc/pacman.d/mirrorlist"
+#cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
+clear
 cat /mnt/etc/pacman.d/mirrorlist
 sleep 3
 clear
