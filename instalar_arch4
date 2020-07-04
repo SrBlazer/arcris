@@ -2088,16 +2088,44 @@ sleep 2
 clear
 
 
-clear
+
+clear && echo "" 
+echo -e ""
+echo -e "\t\t\t| Actualizando Hora Actual en LiveCD |"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
+echo -e ""
+sleep 2
+
 echo ""
 timedatectl set-timezone $zonahorariaok
 ntpd -qg
 sleep 3
 hwclock --systohc
+clear
+clear && echo "" 
+echo -e ""
+echo -e "\t\t\t| Actualizando Hora Actual en LiveCD |"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
+echo -e ""
+sleep 2
 timedatectl status
 sleep 5
 clear
+clear && echo "" 
+echo -e ""
+echo -e "\t\t\t| Actualizando lisa de Keys en LiveCD |"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
+echo -e ""
+sleep 2
 pacman -Sy archlinux-keyring --noconfirm 
+sleep 2
+clear
+
+clear && echo "" 
+echo -e ""
+echo -e "\t\t\t| Actualizando MirrorList en LiveCD |"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
+echo -e ""
 sleep 2
 #cp pacman.conf /etc/pacman.conf
 pacman -Sy reflector --noconfirm 
@@ -2401,9 +2429,10 @@ sleep 2
 arch-chroot /mnt /bin/bash -c "systemctl enable dhcpcd NetworkManager"
 clear
 
-#cp pacman-chroot.conf /mnt/etc/pacman.conf
-
-arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
+# REPO_CRISTO FUERA
+cp pacman-chroot.conf /mnt/etc/pacman.conf
+arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm" 
+arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm" 
 
 clear
 
@@ -2417,7 +2446,7 @@ if [ $uefi == 1 ] && [ -d /sys/firmware/efi ]; then
 clear
 titulo_progreso="| SU SISTEMA ES UEFI |"
 barra_progreso
-arch-chroot /mnt /bin/bash -c "pacman -Sy grub efibootmgr os-prober --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S grub efibootmgr os-prober --noconfirm"
 clear
 echo ""
 echo '>>> Su disco es GPT | UEFI es el sistema Moderno <<<'
@@ -2449,7 +2478,7 @@ else
 clear
 titulo_progreso="|  SISTEMA BIOS LEGACY Y DISCO DOS/MBR  |"
 barra_progreso
-arch-chroot /mnt /bin/bash -c "pacman -Sy grub os-prober --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S grub os-prober --noconfirm"
 clear
 echo "" 
 echo '>>> Su disco es DOS MBR | BIOS Legacy es un sistema antiguo <<<' 
@@ -2477,7 +2506,7 @@ fi
 # FIN GRUB
 
 
-arch-chroot /mnt /bin/bash -c "pacman -Sy xdg-user-dirs --noconfirm"
+arch-chroot /mnt /bin/bash -c "pacman -S xdg-user-dirs --noconfirm"
 clear
 arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
 clear
