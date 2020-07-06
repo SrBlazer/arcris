@@ -854,26 +854,15 @@ read line
     
     ####################################################################
 
-
+VMbox=false
 if [ "$VM" == "true" ]; then
     
             infovideo
             case "$virt" in
                 
-                vbox)   kernel=$(arch-chroot /mnt uname -a | tail -c -6)
-                        if [ "$kernel" == "Linux" ]; then
-                            GPU="virtualbox-guest-utils xf86-video-vmware virtualbox-host-modules-arch mesa mesa-libgl"
-                            GPUvirt="vboxservice"
-                            echo $GPUvirt | awk -F " " '{print $1}' > GPUvirt                            
-                            dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado VirtualBox\nInstalar: VirtualBox Guest utils" 8 80
-                            VMbox=true
-                        else
-                            GPU="virtualbox-guest-dkms virtualbox-host-dkms mesa mesa-libgl"
-                            GPUvirt="systemd-modules-load"
-                            echo $GPUvirt | awk -F " " '{print $1}' > GPUvirt
-                            dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado VirtualBox\nInstalar: VirtualBox Guest-dkms" 8 80
-                            VMbox=true
-                        fi
+                vbox)   dialog --title "-| Driver de Vídeo |-" --stdout --ok-label "<Instalar>"  --msgbox "\nVídeo Detectado Virtual Box" 8 80
+                        VMbox=true
+                        
                 ;;
                 
                 vmware) GPU="xf86-video-vmware xf86-input-vmmouse open-vm-tools net-tools gtkmm mesa mesa-libgl"
@@ -2623,6 +2612,18 @@ mensaje_install
 titulo_progreso="Instalando Sistema de Vídeo"
 barra_progreso
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $GPU --noeditmenu --noconfirm --needed"
+if [ "$VMbox" == "true" ]; then
+kernel=$(arch-chroot /mnt uname -a | tail -c -6)
+if [ "$kernel" == "Linux" ]; then
+    arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S virtualbox-guest-utils xf86-video-vmware virtualbox-host-modules-arch mesa mesa-libgl --noeditmenu --noconfirm --needed"
+    GPUvirt="vboxservice"
+    echo $GPUvirt | awk -F " " '{print $1}' > GPUvirt                            
+else
+    arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S virtualbox-guest-dkms virtualbox-host-dkms mesa mesa-libgl --noeditmenu --noconfirm --needed"
+    GPUvirt="systemd-modules-load"
+    echo $GPUvirt | awk -F " " '{print $1}' > GPUvirt
+fi
+fi
 mensaje_install
 
 
@@ -2638,6 +2639,7 @@ arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S gnu-free-fonts ttf
 mensaje_install
 #adobe-source-han-sans-jp-fonts
 #adobe-source-han-sans-cn-fonts
+
 
 
 
