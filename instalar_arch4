@@ -1153,7 +1153,7 @@ for choice in $choices
 do
     case $choice in
         
-        1)  DE="xfce4 xfce4-goodies network-manager-applet alacarte papirus-icon-theme deepin-icon-theme sierra-gtk-theme-git gnu-free-fonts gnome-font-viewer tumbler ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer"
+        1)  DE="xfce4 xfce4-goodies network-manager-applet alacarte papirus-icon-theme deepin-icon-theme sierra-gtk-theme-git gnu-free-fonts gnome-font-viewer tumbler ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer mugshot"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo lightdm > DMservice
             xfce4tema=true
@@ -2526,8 +2526,7 @@ fi
 
 arch-chroot /mnt /bin/bash -c "pacman -S xdg-user-dirs --noconfirm"
 clear
-arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
-clear
+
 
 
 #echo ""
@@ -2777,6 +2776,7 @@ arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/* /home/$nombre_usuario/.conf
 arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/fondo-arch.png /usr/share/backgrounds/xfce/xfce-stripes.png"
 arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/5336864_orig.png /usr/usb.png"
 arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/logo2.png /usr/logo-arch.png"
+arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/logo2.png /home/$nombre_usuario/.face"
 arch-chroot /mnt /bin/bash -c "cp -rf xfce4/config/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf"
 #
 arch-chroot /mnt /bin/bash -c "rm -R xfce4/"
@@ -2978,7 +2978,6 @@ rm GPUvirt
 clear
 
 
-arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario xdg-user-dirs-update --force"
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 arch-chroot /mnt /bin/bash -c "ls -l /home/$nombre_usuario"
 echo ''
@@ -3061,6 +3060,10 @@ arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)"
 export $(cat /mnt/etc/locale.conf)
 #arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario export $(cat /etc/locale.conf)"
 #export $(cat /mnt/etc/locale.conf)
+
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario xdg-user-dirs-update --force"
+arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
+clear
 
 swapdisco=$( fdisk -l | grep "/dev/\|swap" | grep swap | awk -F ' ' '{print $1}' )
 umount -R /mnt
