@@ -3060,8 +3060,9 @@ cp pacman-chroot.conf /mnt/etc/pacman.conf
 
 arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
 export $(cat /mnt/etc/locale.conf)
-#arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario export $(cat /etc/locale.conf)"
-#export $(cat /mnt/etc/locale.conf)
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario export $(cat /etc/locale.conf)"
+export $(cat /mnt/etc/locale.conf)
+clear
 
 arch-chroot /mnt xdg-user-dirs-update --force
 arch-chroot /mnt sudo -u $nombre_usuario xdg-user-dirs-update --force
