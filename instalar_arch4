@@ -2520,6 +2520,7 @@ clear
 fi
 # FIN GRUB
 
+## DIRECTORIOS
 clear
 arch-chroot /mnt /bin/bash -c "pacman -S xdg-user-dirs --noconfirm"
 sleep 5
@@ -2529,14 +2530,13 @@ arch-chroot /mnt xdg-user-dirs-update --force
 arch-chroot /mnt sudo -u $nombre_usuario xdg-user-dirs-update --force
 arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario xdg-user-dirs-update --force"
-
+echo ""
 ls /root
 echo ""
 echo ""
 ls /home/$nombre_usuario
-
+echo ""
 sleep 5
-
 clear
 
 
