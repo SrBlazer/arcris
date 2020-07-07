@@ -2318,10 +2318,10 @@ arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario export $(cat /etc/locale.
 export $(cat /mnt/etc/locale.conf)
 
 arch-chroot /mnt xdg-user-dirs-update --force
-arch-chroot /mnt sudo -u $nombre_usuario xdg-user-dirs-update --force
+#arch-chroot /mnt sudo -u $nombre_usuario xdg-user-dirs-update --force
 
 arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
-arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario xdg-user-dirs-update --force"
+#arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario xdg-user-dirs-update --force"
 
 sleep 3
 
