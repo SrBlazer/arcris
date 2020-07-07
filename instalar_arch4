@@ -2365,9 +2365,6 @@ sleep 5
 clear
 
 
-
-
-
 #Zona Horaria
 if [ "$zonadefaultNo" == "true" ]; then
 ln -sf $timezonedir${timezone} /mnt/etc/localtime
