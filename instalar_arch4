@@ -2286,7 +2286,7 @@ arch-chroot /mnt /bin/bash -c "systemctl enable bluetooth.service"
 titulo_progreso="| Instalando: Base y Base-devel |"
 barra_progreso
 
-pacstrap /mnt base base-devel reflector nano
+pacstrap /mnt base base-devel reflector nano xdg-user-dirs
 clear
 arch-chroot /mnt /bin/bash -c "reflector --verbose --latest 15 --sort rate --save /etc/pacman.d/mirrorlist"
 #cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
@@ -2522,12 +2522,12 @@ fi
 
 ## DIRECTORIOS
 clear
-arch-chroot /mnt /bin/bash -c "pacman -Sy xdg-user-dirs --noconfirm"
-sleep 5
+# arch-chroot /mnt /bin/bash -c "pacman -Sy xdg-user-dirs --noconfirm"
+# sleep 5
 clear
 echo ""
-arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update"
-arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update"
+arch-chroot /mnt xdg-user-dirs-update
+#arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update"
 #arch-chroot /mnt xdg-user-dirs-update
 #arch-chroot /mnt xdg-user-dirs-update --force
 #arch-chroot /mnt sudo -u $nombre_usuario xdg-user-dirs-update --force
