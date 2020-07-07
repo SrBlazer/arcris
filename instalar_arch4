@@ -2922,17 +2922,17 @@ do
     case $choice in
         es)
             keyboard="es"
-            keymap=$keyboard  
+            keymap="es"
             ;;
             
         latam)
             keyboard="latam"
-            keymap=$keyboard 
+            keymap="latam"
             ;;
             
         us)
             keyboard="us"
-            keymap=$keyboard  
+            keymap="us"
             ;;
             
         otros)
@@ -2952,7 +2952,7 @@ do
 done
 #FIN the X11 keymap
 
-arch-chroot /mnt /bin/bash -c "localectl set-x11-keymap $keymap"
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario localectl set-x11-keymap $keymap"
 sleep 3
 clear
 
