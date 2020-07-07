@@ -2312,7 +2312,6 @@ arch-chroot /mnt /bin/bash -c "locale-gen"
 echo "LANG=$locale" > /mnt/etc/locale.conf && cat /mnt/etc/locale.conf 
 echo "KEYMAP=$keymap" > /mnt/etc/vconsole.conf && cat /mnt/etc/vconsole.conf 
 
-arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
 
 arch-chroot /mnt /bin/bash -c "export $(cat /mnt/etc/locale.conf)" 
 export $(cat /mnt/etc/locale.conf)
@@ -2534,12 +2533,13 @@ echo ""
 #arch-chroot /mnt xdg-user-dirs-update --force
 #arch-chroot /mnt sudo -u $nombre_usuario xdg-user-dirs-update --force
 #arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update --force"
-#arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario xdg-user-dirs-update"
+arch-chroot /mnt /bin/bash -c "xdg-user-dirs-update"
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario xdg-user-dirs-update"
 echo ""
-ls /root
+arch-chroot /mnt /bin/bash -c "ls -l /root/"
 echo ""
 echo ""
-ls /home/$nombre_usuario
+arch-chroot /mnt /bin/bash -c "ls -l /home/$nombre_usuario/"
 echo ""
 sleep 5
 clear
