@@ -1203,7 +1203,7 @@ do
             plasmatema=true
             ;;
             
-        2)  DE="plasma dolphin kate kdialog keditbookmarks kfind khelpcenter konqueror kwrite konsole gnu-free-fonts ttf-hack discover"
+        2)  DE="plasma dolphin kate kdialog keditbookmarks kfind khelpcenter konqueror kwrite konsole gnu-free-fonts ttf-hack discover appmenu-gtk-module libdbusmenu-glib libdbusmenu-gtk3 libdbusmenu-gtk2"
             DM="sddm libxcb qt5-virtualkeyboard"
             echo sddm > DMservice
             ;;
@@ -2098,6 +2098,8 @@ sleep 2
 
 echo ""
 timedatectl set-timezone $zonahorariaok
+pacman -Sy ntpd --noconfirm 
+clear
 ntpd -qg
 sleep 3
 hwclock --systohc
@@ -2977,7 +2979,7 @@ do
     esac
 done
 #FIN the X11 keymap
-
+clear
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario localectl set-x11-keymap $keymap"
 sleep 3
 clear
