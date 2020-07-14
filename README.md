@@ -6,6 +6,7 @@
 > Método 1
 ```
 loadkeys es
+pacman -Sy wget --noconfirm
 wget is.gd/arcris && sh arcris
 ```
 
@@ -17,4 +18,3 @@ git clone git://github.com/CodigoCristo/arcris
 cd arcris
 sh arcris-install
 ```
-
