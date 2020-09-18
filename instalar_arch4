@@ -2675,15 +2675,38 @@ cp pacman-chroot.conf /mnt/etc/pacman.conf
 arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm" 
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -Syu --noeditmenu --noconfirm"
 
+
+
+if [ "$seleccionDE" == "true" ]; then
+
 titulo_progreso="Instalando Xorg"
 barra_progreso
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $XORG --noeditmenu --noconfirm --needed"
 mensaje_install
-
-
+clear
 titulo_progreso="Instalando DE/WM/DM"
 barra_progreso
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $DE --noeditmenu --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $DM --noeditmenu --noconfirm --needed"
+clear
+echo -e ""
+echo -e "\t\t\t\tActivando Servicio Display Manager"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
+echo -e ""
+arch-chroot /mnt /bin/bash -c "systemctl enable $(cat DMservice)"
+mensaje_install
+
+fi
+
+if [ "$seleccionWM" == "true" ]; then
+
+titulo_progreso="Instalando Xorg"
+barra_progreso
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $XORG --noeditmenu --noconfirm --needed"
+mensaje_install
+clear
+titulo_progreso="Instalando DE/WM/DM"
+barra_progreso
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $WM --noeditmenu --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $DM --noeditmenu --noconfirm --needed"
 clear
@@ -2693,6 +2716,21 @@ printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
 echo -e ""
 arch-chroot /mnt /bin/bash -c "systemctl enable $(cat DMservice)"
 mensaje_install
+
+fi
+
+
+
+if [ "$seleccionXORG" == "true" ]; then
+
+titulo_progreso="Instalando Xorg"
+barra_progreso
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $XORG --noeditmenu --noconfirm --needed"
+mensaje_install
+
+
+fi
+
 
 
 if [ "$lirisesion" == "true" ]; then
