@@ -1284,47 +1284,46 @@ done
 
 
         3) #DEEPIN
-            cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" --no-tags --ok-label '< Seleccionar >' \
-                --nocancel --checklist "Seleeciona paquetes del escritorio Deepin\n[ ESPACIO ] - Para marcar o desmarcar *" 14 100 19)
-            options=(2 "> deepin-topbar" off
-                     3 "> deepin-dock-plugin-arch-update" off
-                     4 "> deepin-dock-plugin-cmdu-git" off
-                     5 "> deepin-dock-plugin-netspeedandsysteminfo" off
-                     6 "> deepin-dock-plugin-pineappledatetime-git" off
-                     7 "> deepin-dock-plugin-weather-git" off)
-            choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-            clear
-            for choice in $choices
-            do
-                case $choice in
-
-                    2)
-                        deepin2="deepin-topbar"
-                        ;;
-                    3)
-                        deepin3="deepin-dock-plugin-arch-update"
-                        ;;
-                    4)
-                        deepin4="deepin-dock-plugin-cmdu-git"
-                        ;;
-                    5)
-                        deepin5="deepin-dock-plugin-netspeedandsysteminfo"
-                        ;;
-                    6)
-                        deepin6="deepin-dock-plugin-pineappledatetime-git"
-                        ;;
-                    7)
-                        deepin7="deepin-dock-plugin-weather-git"
-                        ;;
-                esac
-            done
+            #cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo" --separate-output --column-separator "|" --no-tags --ok-label '< Seleccionar >' \
+            #    --nocancel --checklist "Seleeciona paquetes del escritorio Deepin\n[ ESPACIO ] - Para marcar o desmarcar *" 14 100 19)
+           # options=(2 "> deepin-topbar" off
+          #           3 "> deepin-dock-plugin-arch-update" off
+         #            4 "> deepin-dock-plugin-cmdu-git" off
+        #             5 "> deepin-dock-plugin-netspeedandsysteminfo" off
+       #              6 "> deepin-dock-plugin-pineappledatetime-git" off
+      #               7 "> deepin-dock-plugin-weather-git" off)
+     #       choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+    #        clear
+   #         for choice in $choices
+  #          do
+ #               case $choice in
+#
+                  #  2)
+                 #       deepin2="deepin-topbar"
+                #        ;;
+               #     3)
+              #          deepin3="deepin-dock-plugin-arch-update"
+             #           ;;
+                   # 4)
+                  #      deepin4="deepin-dock-plugin-cmdu-git"
+                 #       ;;
+                #    5)
+               #         deepin5="deepin-dock-plugin-netspeedandsysteminfo"
+              #          ;;
+                   # 6)
+                  #      deepin6="deepin-dock-plugin-pineappledatetime-git"
+                 #       ;;
+                #    7)
+               #         deepin7="deepin-dock-plugin-weather-git"
+              #          ;;
+             #   esac
+            #done
 
             deepin="deepin deepin-extra gnu-free-fonts ttf-hack ttf-inconsolata gnome-font-viewer ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer"
             DE="$deepin $deepin1 $deepin2 $deepin3 $deepin4 $deepin5 $deepin6 $deepin7"
 
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
-            echo lightdm > DMservice
-            
+            echo lightdm > DMservice            
             ;;
       ######FINAL DEEPIN
 
