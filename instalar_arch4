@@ -6,8 +6,6 @@ titulo="| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |
 
 #Variable para zona horaria
 clear
-echo ""
-echo ""
 echo "Cargando..."
 echo ""
 echo ""
@@ -2774,6 +2772,7 @@ fi
 
 
 if [ "$programasextrasNO" == "true" ]; then
+  clear
   mensaje_install
 fi
 
