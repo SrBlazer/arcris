@@ -2403,9 +2403,13 @@ clear
 echo "Hostname: $(cat /mnt/etc/hostname)"
 echo ""
 echo "Hosts: $(cat /mnt/etc/hosts)"
-arch-chroot /mnt /bin/sh -c "echo root:$rootpasswd | chpasswd"
-arch-chroot /mnt /bin/sh -c "useradd -m -g users -s /bin/bash $user"
-arch-chroot /mnt /bin/bash -c "echo $user:$userpasswd | chpasswd"
+
+#arch-chroot /mnt /bin/sh -c "echo root:$rootpasswd | chpasswd"
+arch-chroot /mnt /bin/bash -c "(echo $rootpasswd ; echo $rootpasswd) | passwd root"
+arch-chroot /mnt /bin/bash -c "useradd -m -g users -s /bin/bash $user"
+arch-chroot /mnt /bin/bash -c "(echo $userpasswd ; echo $userpasswd) | passwd $user"
+
+#arch-chroot /mnt /bin/bash -c "echo $user:$userpasswd | chpasswd"
 sed -i "80i $user ALL=(ALL) NOPASSWD: ALL"  /mnt/etc/sudoers
 arch-chroot /mnt /bin/bash -c "hwclock -w"
 sleep 2
@@ -3163,9 +3167,9 @@ do
     esac
 done
 #FIN the X11 keymap
-clear
-arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario localectl set-x11-keymap $keymap"
-sleep 3
+
+#arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario localectl set-x11-keymap $keymap"
+#sleep 3
 clear
 
 # MENSAJE FINAL
