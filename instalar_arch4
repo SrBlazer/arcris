@@ -6,14 +6,20 @@ titulo="| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |
 
 #Variable para zona horaria
 clear
+echo ""
+echo "Cargando..."
+echo ""
 zonahorariaok=$(curl https://ipapi.co/timezone)
 echo ""
 echo "Cargando..."
+clear
 
-if ping -c 3 www.google.com &> /dev/null; then
+if ping -c 5 www.google.com &> /dev/null; then
   clear
     dialog --title "-|  Revisando Conexión  |-" --backtitle "$titulo" \
     --ok-label 'Siguiente' --prgbox "ping -c 3 archlinux.org && echo && echo Si Hay Internet!" 15 100 
+    clear
+    zonahorariaok=$(curl https://ipapi.co/timezone)
 
 else
      dialog --title "-|  Conexión a RED  |-" --backtitle "$titulo" \
@@ -21,8 +27,8 @@ else
   dialog --backtitle "$titulo" --title "-| Error de RED |-" --msgbox "No hay conexión a Internet" 5 60
   dialog --backtitle "$titulo" --title "-| Conexión WiFi |-" --yesno "¿ Tienes red wifi ?" 5 45 
 case $? in 
-  0)  wifi-menu
-    wifinet=$(netctl list | awk -F " " '{print $2}');;
+  0)  dialog --backtitle "$titulo" --title "-| Ethernet |-" --msgbox "\nPruebe conectando bien su cable de Ethernet\nIntentalo nuevamente..." 8 50
+      exit;;
   1)  dialog --backtitle "$titulo" --title "-| Ethernet |-" --msgbox "\nPruebe conectando bien su cable de Ethernet\nIntentalo nuevamente..." 8 50
       exit;;
 esac
@@ -51,6 +57,7 @@ case "$choice" in
 "1")
 ##INICIO DE HOSTNAME
 # MENSAJE 
+hostname=""
 dialog --backtitle "$titulo" \
 --title "| Hostname |" \
 --msgbox "\n> No se permite caracteres especiales\
@@ -115,6 +122,13 @@ fi
 
 "3")
 ## INICIO DE LANGUAGE 
+
+keyboard=""
+loadkeys=""
+keymap="" 
+locales=""
+locale=""
+
 
 cmd=(dialog --backtitle "$titulo" --title "-| Distribución del teclado |-" --keep-tite --menu "\n" 10 50 10)
 
@@ -183,6 +197,12 @@ locale=$(dialog --backtitle "$titulo" --clear --title "| Selecciona tu país |" 
 "4")
 ## INICIO DE USERS
 # MENSAJE 
+
+rootpasswd=""
+username=""
+user=""
+userpasswd=""
+
 dialog --backtitle "$titulo" \
 --title "| Clave para root |" \
 --msgbox "\n> Ingresa la clave para el Administrador\
@@ -805,6 +825,8 @@ dialog --backtitle "$titulo" \
 \n  [Automatico] o [Manual] \n" 11 75
 
 #Inicio de Video
+virt=""
+GPU=""
 VM=false
 VMbox=false
 VMqemu=false
@@ -1081,17 +1103,28 @@ fi
 "8")
 ## INICIO DE (DE) or (WM)
 
-cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "$titulo" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Selecciona tu (DE) o (WM) a instalar" 9 50 9)
+DE=""
+DM=""
+WM=""
+seleccionDE=false
+seleccionWM=false
+seleccionXORG=false
+
+cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "$titulo" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --nocancel --menu "Selecciona tu (DE) o (WM) a instalar" 10 50 10)
 
 options=(1 "Entorno de escritorio | (DE)"
-         2 "Gestor de ventanas | (WM)")
+         2 "Gestor de ventanas | (WM)"
+         3 "Solo Servidor X | Xorg")
 
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
 for choice in $choices
 do
     case $choice in
-        1) #INICIO (DE)           
+        1) #INICIO (DE)    
+
+seleccionDE=true
+
 cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "$titulo" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --menu "Selecciona tu escritorio a instalar - (DE)" 22 60 19)
 
 options=(1 " > | xfce4 | Xfce desktop| <"
@@ -1141,7 +1174,7 @@ choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 for choice in $choices
 do
     case $choice in
-        
+
         1)  DE="xfce4 xfce4-goodies network-manager-applet alacarte papirus-icon-theme deepin-icon-theme sierra-gtk-theme-git gnu-free-fonts gnome-font-viewer tumbler ffmpegthumbs ffmpegthumbnailer freetype2 poppler-glib libgsf raw-thumbnailer mugshot"
             DM="lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker accountsservice"
             echo lightdm > DMservice
@@ -1390,6 +1423,8 @@ done
             ;;
         2) #INICIO (WM)
 i3tema=false
+seleccionWM=true
+
 
 cmd=(dialog --keep-tite --backtitle "$titulo" \
 --no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label '< Seleccionar >' --menu "Selecciona tu gestor de ventana a instalar - (WM)" 19 55 16)
@@ -1484,6 +1519,10 @@ do
 done
 #FINAL (WM)
             ;;
+        3) 
+          seleccionXORG=true
+          XORG=$"xorg xorg-apps xorg-xinit xorg-twm xterm xf86-input-libinput"
+          ;;
     esac
 done
 
@@ -1494,6 +1533,22 @@ done
 
 "9")
 ## INICIO DE EXTRA PROGRAMS
+
+        TERMI=""
+        UTIL=""
+        AUDIO=""
+        SH=""
+        WEB=""
+        REPRO=""
+        OFFICE=""
+        AP=""
+        RS=""
+        AUR=""
+        AUR_DELETE=""
+
+dialog --title "-| Programas Extras |-" --yesno "\n¿ Deseas instalar Programas extras en su sistema ?\n\nEsto puede tomar un poco más de tiempo\nTodas las descargas son de repo oficiales y de AUR" 9 55
+case $? in
+   0) 
 
 #TERMINALES
 cmd=(dialog --no-collapse --cr-wrap --backtitle "$titulo"  \
@@ -2045,8 +2100,27 @@ AUR=" $AUR1 $AUR2 $AUR3 $AUR4 $AUR5 $AUR6 $AUR7 $AUR8 $AUR9 $AUR10 "
    255) echo "[ESC] key pressed.";;
 esac
 
-finalInstall=true
+;;
+#SELECCIONO QUERER PROGRAMAS
+   1) 
+        TERMI=""
+        UTIL=""
+        AUDIO=""
+        SH=""
+        WEB=""
+        REPRO=""
+        OFFICE=""
+        AP=""
+        RS=""
+        AUR=""
+        AUR_DELETE=""
+        ;;
+#SELECCIONO NO QUERER PROGRAMAS
 
+   255) echo "Presiono la tecla [ESC]";;
+esac
+
+finalInstall=true
 clear
 ;;
 ## FIN DE EXTRA PROGRAMS
@@ -2619,6 +2693,7 @@ printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
 echo -e ""
 arch-chroot /mnt /bin/bash -c "systemctl enable $(cat DMservice)"
 mensaje_install
+
 
 if [ "$lirisesion" == "true" ]; then
 
