@@ -7,11 +7,12 @@ titulo="| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |
 #Variable para zona horaria
 clear
 echo ""
+echo ""
 echo "Cargando..."
+echo ""
 echo ""
 zonahorariaok=$(curl https://ipapi.co/timezone)
 echo ""
-echo "Cargando..."
 clear
 
 if ping -c 5 www.google.com &> /dev/null; then
