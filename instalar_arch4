@@ -2401,7 +2401,7 @@ clear
 echo "Hostname: $(cat /mnt/etc/hostname)"
 echo ""
 echo "Hosts: $(cat /mnt/etc/hosts)"
-
+echo ""
 #arch-chroot /mnt /bin/sh -c "echo root:$rootpasswd | chpasswd"
 arch-chroot /mnt /bin/bash -c "(echo $rootpasswd ; echo $rootpasswd) | passwd root"
 arch-chroot /mnt /bin/bash -c "useradd -m -g users -s /bin/bash $user"
