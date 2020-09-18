@@ -2145,7 +2145,7 @@ dialog --backtitle "$titulo" \
 \n> Al terminar el equipo se reiniciara con su sistema instalado" 15 73
 
 clear
-echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+echo -e "\n\n\n\n\n\n\n\n\n\n\n\n"
 echo ""
 echo -e '\033[38;2;255;0;02m'
 echo " █████╗ ██████╗  ██████╗██████╗ ██╗███████╗";

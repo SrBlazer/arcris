@@ -61,11 +61,11 @@ cp .dialogrc /root
 chmod +x *
 
 
-sed -i '176d' /etc/locale.gen
-sed -i "176i #en_US.UTF-8 UTF-8" /etc/locale.gen
+sed -i '177d' /etc/locale.gen
+sed -i "177i #en_US.UTF-8 UTF-8" /etc/locale.gen
 
-sed -i '199d' /etc/locale.gen
-sed -i "199i es_ES.UTF-8 UTF-8" /etc/locale.gen
+sed -i '200d' /etc/locale.gen
+sed -i "200i es_ES.UTF-8 UTF-8" /etc/locale.gen
 
 
 locale-gen
@@ -80,6 +80,8 @@ sleep 3
 #FONT=ter-v14b  /etc/vconsole.conf 
 #partprobe
 
+sed -i '200d' /etc/locale.gen
+sed -i "200i #es_ES.UTF-8 UTF-8" /etc/locale.gen
 
 #Inicio
 dialog --backtitle "| Instalación de ArchLinux en Español - https://t.me/ArchLinuxCristo |" \

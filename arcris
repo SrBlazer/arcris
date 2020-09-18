@@ -8,7 +8,7 @@
 
 #Colores
 clear
-pacman -Sy git dialog --noconfirm --needed
+pacman -Sy git dialog ntp --noconfirm --needed
 clear
 rm arcris
 git clone https://github.com/CodigoCristo/arcris
