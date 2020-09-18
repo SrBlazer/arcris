@@ -14,6 +14,7 @@ echo ""
 zonahorariaok=$(curl https://ipapi.co/timezone)
 echo ""
 clear
+echo "Cargando..."
 
 if ping -c 5 www.google.com &> /dev/null; then
   clear
@@ -198,11 +199,6 @@ locale=$(dialog --backtitle "$titulo" --clear --title "| Selecciona tu país |" 
 "4")
 ## INICIO DE USERS
 # MENSAJE 
-
-rootpasswd=""
-username=""
-user=""
-userpasswd=""
 
 dialog --backtitle "$titulo" \
 --title "| Clave para root |" \
@@ -1546,6 +1542,8 @@ done
         RS=""
         AUR=""
         AUR_DELETE=""
+        programasextrasSI=false
+        programasextrasNO=false
 
 dialog --title "-| Programas Extras |-" --yesno "\n¿ Deseas instalar Programas extras en su sistema ?\n\nEsto puede tomar un poco más de tiempo\nTodas las descargas son de repo oficiales y de AUR" 9 55
 case $? in
@@ -2101,6 +2099,8 @@ AUR=" $AUR1 $AUR2 $AUR3 $AUR4 $AUR5 $AUR6 $AUR7 $AUR8 $AUR9 $AUR10 "
    255) echo "[ESC] key pressed.";;
 esac
 
+programasextrasSI=true
+
 ;;
 #SELECCIONO QUERER PROGRAMAS
    1) 
@@ -2115,6 +2115,7 @@ esac
         RS=""
         AUR=""
         AUR_DELETE=""
+        programasextrasNO=true
         ;;
 #SELECCIONO NO QUERER PROGRAMAS
 
@@ -2300,13 +2301,19 @@ microcode=$(lspci -k | grep 'Host bridge: Intel')
 lspci -k | grep 'Host bridge:'  > procesador
 if [[ $microcode  = *Intel* || $microcode = *intel* || $microcode = *INTEL* ]]
 then
-clear         
+clear    
+echo ""
+echo ""     
 cat procesador
+echo ""   
 arch-chroot /mnt /bin/bash -c "pacman -S intel-ucode --noconfirm"
 
 else
 clear
+echo ""
+echo ""     
 cat procesador
+echo ""  
 arch-chroot /mnt /bin/bash -c "pacman -S amd-ucode --noconfirm"
 fi
 
@@ -2454,7 +2461,7 @@ clear
 
 clear && echo "" 
 echo -e ""
-echo -e "\t\t\t| Instalando paquetes seleccionados |"
+echo -e "\t\t\t| INICIO DE INSTALACIÓN |"
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' _
 echo -e ""
 sleep 3
@@ -2733,6 +2740,24 @@ mensaje_install
 fi
 
 
+titulo_progreso="Instalando Driver de Vídeo"
+barra_progreso
+arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $GPU --noeditmenu --noconfirm --needed"
+if [ "$VMbox" == "true" ]; then
+kernel=$(arch-chroot /mnt uname -a | tail -c -6)
+if [ "$kernel" == "Linux" ]; then
+    arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S virtualbox-guest-utils xf86-video-vmware virtualbox-host-modules-arch mesa mesa-libgl --noeditmenu --noconfirm --needed"
+    GPUvirt="vboxservice"
+    echo $GPUvirt | awk -F " " '{print $1}' > GPUvirt                            
+else
+    arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S virtualbox-guest-dkms virtualbox-host-dkms mesa mesa-libgl --noeditmenu --noconfirm --needed"
+    GPUvirt="systemd-modules-load"
+    echo $GPUvirt | awk -F " " '{print $1}' > GPUvirt
+fi
+fi
+mensaje_install
+
+
 
 if [ "$lirisesion" == "true" ]; then
 
@@ -2742,6 +2767,14 @@ arch-chroot /mnt /bin/bash -c "systemctl --user isolate liri.target"
 
 fi
 
+
+
+if [ "$programasextrasNO" == "true" ]; then
+  mensaje_install
+fi
+
+
+if [ "$programasextrasSI" == "true" ]; then
 
 if [ "$TERMINAL_condicion" == "true" ]; then
 titulo_progreso="Instalando Terminal Seleccionada"
@@ -2761,24 +2794,6 @@ titulo_progreso="Instalando Sistema de Audio"
 barra_progreso
 arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $AUDIO --noeditmenu --noconfirm --needed"
 mensaje_install 
-
-
-titulo_progreso="Instalando Sistema de Vídeo"
-barra_progreso
-arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S $GPU --noeditmenu --noconfirm --needed"
-if [ "$VMbox" == "true" ]; then
-kernel=$(arch-chroot /mnt uname -a | tail -c -6)
-if [ "$kernel" == "Linux" ]; then
-    arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S virtualbox-guest-utils xf86-video-vmware virtualbox-host-modules-arch mesa mesa-libgl --noeditmenu --noconfirm --needed"
-    GPUvirt="vboxservice"
-    echo $GPUvirt | awk -F " " '{print $1}' > GPUvirt                            
-else
-    arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario yay -S virtualbox-guest-dkms virtualbox-host-dkms mesa mesa-libgl --noeditmenu --noconfirm --needed"
-    GPUvirt="systemd-modules-load"
-    echo $GPUvirt | awk -F " " '{print $1}' > GPUvirt
-fi
-fi
-mensaje_install
 
 
 titulo_progreso="Instalando Shell del Sistema"
@@ -2890,6 +2905,8 @@ arch-chroot /mnt /bin/bash -c "appstreamcli refresh-cache --force"
 mensaje_install
 sleep 8
     fi
+
+fi
 
 
 
@@ -3065,16 +3082,56 @@ do
         es)
             keyboard="es"
             keymap="es"
+            arch-chroot /mnt /bin/bash -c "localectl --no-convert set-x11-keymap es"
+      arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario localectl --no-convert set-x11-keymap es"
+      arch-chroot /mnt /bin/bash -c "setxkbmap -layout es"
+      arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario setxkbmap -layout es"
+      echo -e 'Section "InputClass"' > /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'Identifier "system-keyboard"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'MatchIsKeyboard "on"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'Option "XkbLayout" "es"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'EndSection' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      clear
+      cat /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      sleep 5
+      clear
+
             ;;
             
         latam)
             keyboard="latam"
             keymap="latam"
+            arch-chroot /mnt /bin/bash -c "localectl --no-convert set-x11-keymap latam"
+      arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario localectl --no-convert set-x11-keymap  latam"
+      arch-chroot /mnt /bin/bash -c "setxkbmap -layout latam"
+      arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario setxkbmap -layout latam"
+      echo -e 'Section "InputClass"' > /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'Identifier "system-keyboard"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'MatchIsKeyboard "on"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'Option "XkbLayout" "latam"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'EndSection' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      clear
+      cat /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      sleep 5
+      clear
             ;;
             
         us)
             keyboard="us"
             keymap="us"
+            arch-chroot /mnt /bin/bash -c "localectl --no-convert set-x11-keymap us"
+      arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario localectl --no-convert set-x11-keymap us"
+      arch-chroot /mnt /bin/bash -c "setxkbmap -layout us"
+      arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario setxkbmap -layout us"
+      echo -e 'Section "InputClass"' > /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'Identifier "system-keyboard"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'MatchIsKeyboard "on"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'Option "XkbLayout" "us"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      echo -e 'EndSection' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      clear
+      cat /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+      sleep 5
+      clear
             ;;
             
         otros)
@@ -3083,7 +3140,20 @@ do
                 locales="$(arch-chroot /mnt localectl list-x11-keymap-layouts | awk '$locales=$locales" Keyboard"')" && locales=$(echo "$locales") 
                 keyboard=$(dialog --backtitle "Canal de Youtube: Codigo Cristo" --clear --title "-| Teclado en X.org |-" --menu "\n" 15 0 15   ${locales} 2>&1 > /dev/tty) 
                 if [ $? == 0 ];then 
-                    keymap=$keyboard 
+                    keymap=$keyboard
+                    arch-chroot /mnt /bin/bash -c "localectl --no-convert set-x11-keymap $keymap"
+          arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario localectl --no-convert set-x11-keymap $keymap"
+          arch-chroot /mnt /bin/bash -c "setxkbmap -layout $keymap"
+          arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario setxkbmap -layout $keymap"
+          echo -e 'Section "InputClass"' > /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+          echo -e 'Identifier "system-keyboard"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+          echo -e 'MatchIsKeyboard "on"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+          echo -e 'Option "XkbLayout" "$keymap"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+          echo -e 'EndSection' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+          clear
+          cat /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
+          sleep 5
+          clear 
                     selected=1 
                 else 
                     dialog --backtitle "Canal de Youtube: Codigo Cristo" --title "-| ERROR |-" --stdout --ok-label 'Siguiente' --msgbox "Ingrese correctamente el teclado para continuar" 5 55 
