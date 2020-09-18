@@ -7,13 +7,13 @@
 ```
 loadkeys es
 pacman -Sy wget --noconfirm
-wget is.gd/arcris && sh arcris
+wget is.gd/arcris ; sh arcris
 ```
 
 > Método 2
 ```
 loadkeys es
-pacman -Sy git dialog --noconfirm
+pacman -Sy git npt dialog --noconfirm
 git clone git://github.com/CodigoCristo/arcris
 cd arcris
 sh arcris-install
