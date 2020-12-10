@@ -3066,6 +3066,8 @@ done
 
 
 clear
+
+
 #Load the X11 keymap
 cmd=(dialog --backtitle "Canal de Youtube: Codigo Cristo" --title "-| Definir teclado para X.org |-" --keep-tite --menu "\n" 10 0 10)
 
@@ -3079,7 +3081,8 @@ choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 for choice in $choices
 do
     case $choice in
-        es)
+        es) 
+            clear
             keyboard="es"
             keymap="es"
             arch-chroot /mnt /bin/bash -c "localectl --no-convert set-x11-keymap es"
@@ -3091,14 +3094,13 @@ do
       echo -e 'MatchIsKeyboard "on"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
       echo -e 'Option "XkbLayout" "es"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
       echo -e 'EndSection' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
-      clear
       cat /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
-      sleep 3
+      sleep 5
       clear
-
             ;;
             
         latam)
+            clear
             keyboard="latam"
             keymap="latam"
             arch-chroot /mnt /bin/bash -c "localectl --no-convert set-x11-keymap latam"
@@ -3110,13 +3112,13 @@ do
       echo -e 'MatchIsKeyboard "on"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
       echo -e 'Option "XkbLayout" "latam"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
       echo -e 'EndSection' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
-      clear
       cat /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
-      sleep 3
+      sleep 5
       clear
             ;;
             
         us)
+            clear
             keyboard="us"
             keymap="us"
             arch-chroot /mnt /bin/bash -c "localectl --no-convert set-x11-keymap us"
@@ -3128,18 +3130,19 @@ do
       echo -e 'MatchIsKeyboard "on"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
       echo -e 'Option "XkbLayout" "us"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
       echo -e 'EndSection' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
-      clear
       cat /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
-      sleep 3
+      sleep 5
       clear
             ;;
             
         otros)
-            selected=0 
-            while [ $selected == "0" ];do 
+            clear
+            selected1=0 
+            while [ $selected1 == "0" ];do 
                 locales="$(arch-chroot /mnt localectl list-x11-keymap-layouts | awk '$locales=$locales" Keyboard"')" && locales=$(echo "$locales") 
                 keyboard=$(dialog --backtitle "Canal de Youtube: Codigo Cristo" --clear --title "-| Teclado en X.org |-" --menu "\n" 15 0 15   ${locales} 2>&1 > /dev/tty) 
                 if [ $? == 0 ];then 
+                    clear
                     keymap=$keyboard
                     arch-chroot /mnt /bin/bash -c "localectl --no-convert set-x11-keymap $keymap"
           arch-chroot /mnt /bin/bash -c "sudo -u $nombre_usuario localectl --no-convert set-x11-keymap $keymap"
@@ -3150,11 +3153,10 @@ do
           echo -e 'MatchIsKeyboard "on"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
           echo -e 'Option "XkbLayout" "$keymap"' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
           echo -e 'EndSection' >> /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
-          clear
           cat /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
-          sleep 3
-          clear 
-                    selected=1 
+          sleep 5
+          clear
+                    selected1=1 
                 else 
                     dialog --backtitle "Canal de Youtube: Codigo Cristo" --title "-| ERROR |-" --stdout --ok-label 'Siguiente' --msgbox "Ingrese correctamente el teclado para continuar" 5 55 
                 fi
@@ -3163,6 +3165,8 @@ do
     esac
 done
 #FIN the X11 keymap
+
+
 
 titulo_progreso="Instalando Shell del Sistema"
 barra_progreso
